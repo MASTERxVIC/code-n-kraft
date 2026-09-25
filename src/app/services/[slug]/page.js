@@ -133,7 +133,7 @@ export default async function ServicePage({ params }) {
             ))}
           </div>
           <div className="mt-10">
-            <ServiceCtaButton preset={s.preset}>
+            <ServiceCtaButton preset={s.preset} width="w-auto md:w-auto">
               Get a quote for {s.title}
             </ServiceCtaButton>
           </div>
