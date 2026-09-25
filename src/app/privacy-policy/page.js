@@ -61,11 +61,11 @@ export default function PrivacyPolicyPage() {
       <LegalSection id="data-we-collect" n={2} title="Personal data we collect">
         <p>
           <strong>a) Information you share with us.</strong> When you contact us —
-          by email, through Instagram direct messages (including our free
-          visibility-audit intake), or any other channel — you may share your
-          name, email address, phone number, business name, website URL, and
-          details about your business or project. We collect only what you
-          choose to share.
+          through our website enquiry form, by email, through Instagram direct
+          messages (including our free visibility-audit intake), or any other
+          channel — you may share your name, email address, phone number,
+          business name, website URL, and details about your business or
+          project. We collect only what you choose to share.
         </p>
         <p>
           <strong>b) Information collected automatically.</strong> Like most
@@ -120,6 +120,7 @@ export default function PrivacyPolicyPage() {
         <ul className={listCls}>
           <li>
             <strong>Service providers</strong> who help us operate — for example,
+            Formspree (which processes our website enquiry-form submissions),
             Instagram/Meta (for direct messages) and our email hosting provider.
             They process data only on our instructions and are expected to
             protect it.
