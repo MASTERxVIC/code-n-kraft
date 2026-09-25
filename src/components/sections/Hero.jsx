@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Section from "../ui/Section";
 import Pill from "../ui/Pill";
+import { TextScramble } from "@/components/core/text-scramble";
 
 const pills = [
   "No templates",
@@ -24,9 +25,11 @@ export default function Hero() {
       />
 
       <div className="relative z-10 flex flex-col xl:max-w-[700px] md:max-w-[600px]">
-        <p className="font-label xl:text-sm text-xs" suppressHydrationWarning>
-          コード・ン・クラフト&nbsp;&nbsp;Code &apos;n&apos; Kraft
-        </p>
+        <TextScramble
+          as="p"
+          className="font-label xl:text-sm text-xs"
+          texts={["コード・ン・クラフト", "Code 'n' Kraft"]}
+        />
 
         <Image
           id="hero-cnk-letter"
