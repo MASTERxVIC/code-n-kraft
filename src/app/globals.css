@@ -11,6 +11,7 @@
   --color-surface: #ffffff;
   --color-nav: #f0e1fc;
   --color-footer: #F3E8FF;
+  --color-on-dark: #ffffff;
 
   /* Fonts (layout.js me next/font se variables set honge) */
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;

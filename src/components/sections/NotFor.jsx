@@ -1,4 +1,3 @@
-"use client";
 
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";

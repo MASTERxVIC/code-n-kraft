@@ -8,7 +8,7 @@ export default function DarkWatermarkWrapper({ children, className = "" }) {
         <div className="relative flex h-[800px] w-[800px] shrink-0 items-center justify-center md:h-[1000px] md:w-[1000px]">
           <Image
             src="/assets/LogoDarkWatermark.svg"
-            alt="Background Watermark"
+            alt=""
             fill
             priority
             className="object-contain opacity-50 select-none pointer-events-none scale-110 md:scale-125 transition-transform duration-300"

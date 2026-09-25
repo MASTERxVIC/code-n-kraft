@@ -1,4 +1,3 @@
-"use client";
 
 import BentoGrid from "../ui/BentoGrid";
 import Section from "../ui/Section";

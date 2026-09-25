@@ -12,9 +12,9 @@ export default function Welcome() {
       {/* Content wrapper: aspect ratio nahi hona chahiye */}
       <div className="flex flex-col items-center justify-center text-center w-full max-w-[1200px] mx-auto">
         {/* Title */}
-        <h1 className="font-italic text-[32px] sm:text-[40px] text-heading tracking-wide mb-4">
+        <h2 className="font-italic text-[32px] sm:text-[40px] text-heading tracking-wide mb-4">
           Welcome To
-        </h1>
+        </h2>
 
         {/* CNK Logo container: Width fixed rakhein par height auto hone dein */}
         <div className="w-full max-w-[320px] sm:max-w-[550px] md:max-w-[700px] lg:max-w-[823px] h-auto flex justify-center items-center">
