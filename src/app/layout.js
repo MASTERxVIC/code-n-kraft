@@ -23,7 +23,7 @@ const ephesis = Ephesis({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://codenkraft.com"),
   title: {
     default: "Code 'n' Kraft | Web Design, SEO, AEO & GEO Studio",
     template: "%s | Code 'n' Kraft",
@@ -58,9 +58,7 @@ export const metadata = {
   robots: { index: true, follow: true },
 };
 
-// TODO: real domain aate hi SITE_URL badal dena
-// (robots.js / sitemap.js me bhi same value hai, aur metadataBase bhi)
-const SITE_URL = "https://example.com";
+const SITE_URL = "https://codenkraft.com";
 
 const jsonLd = {
   "@context": "https://schema.org",
