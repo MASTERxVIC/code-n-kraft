@@ -25,13 +25,42 @@ export default function SmoothScroll({ children }) {
       const hash = anchor.getAttribute('href')
       if (!hash || hash.length < 2) return
       const el = document.querySelector(hash)
-      if (!el) return
+      if (!el) {
+        // Ye section is page pe nahi hai (jaise legal pages pe #Services)
+        // → home pe jao; wahan pahunchte hi section tak smooth scroll ho jayega
+        e.preventDefault()
+        try {
+          sessionStorage.setItem('cnk-scroll', hash)
+        } catch {
+          /* storage blocked — phir bhi home pe bhejo */
+        }
+        window.location.href = '/'
+        return
+      }
       e.preventDefault()
       // Mobile menu khula ho to uska scroll lock hatao
       document.body.style.overflow = ''
       lenis.scrollTo(el, { offset: -80, duration: 1.4 })
     }
     document.addEventListener('click', onClick)
+
+    // Kisi doosre page (jaise /privacy-policy) ke navbar link se aaye ho
+    // to yaad rakhe hue section tak smooth scroll karo
+    let pendingHash = null
+    try {
+      pendingHash = sessionStorage.getItem('cnk-scroll')
+      sessionStorage.removeItem('cnk-scroll')
+    } catch {
+      /* storage blocked — kuch nahi karna */
+    }
+    if (pendingHash) {
+      const target = document.querySelector(pendingHash)
+      if (target) {
+        requestAnimationFrame(() => {
+          lenis.scrollTo(target, { offset: -80, duration: 1.4 })
+        })
+      }
+    }
 
     const tick = (t) => lenis.raf(t * 1000)
     gsap.ticker.add(tick)

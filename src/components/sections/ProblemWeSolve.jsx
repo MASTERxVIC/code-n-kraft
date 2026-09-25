@@ -1,10 +1,13 @@
+"use client";
 
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "@/components/ui/Button";
+import { useLeadForm } from "@/components/ui/LeadFormModal";
 import { Reveal } from "@/components/core/reveal";
 
 export default function ProblemWeSolve() {
+  const { openLeadForm } = useLeadForm();
   return (
    
       <Section
@@ -45,7 +48,7 @@ export default function ProblemWeSolve() {
               delay={0.25}
               className="xl:absolute xl:left-[872px] xl:top-[314px]"
             >
-              <Button className="w-[270px] h-[56px] " href="/projects">
+              <Button className="w-[270px] h-[56px] " onClick={openLeadForm}>
                 Make Your Presence
               </Button>
             </Reveal>

@@ -59,6 +59,7 @@ const QUICK_ACCESS = [
 const LEGAL = [
   { label: "Privacy Policy", href: "/privacy-policy" },
   { label: "Terms & Conditions", href: "/terms-conditions" },
+  { label: "Cookie Policy", href: "/cookie-policy" },
 ];
 
 const labelCls =

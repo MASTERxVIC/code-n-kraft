@@ -6,11 +6,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Section from "../ui/Section";
 import Button from "../ui/Button";
+import { useLeadForm } from "../ui/LeadFormModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Cta() {
   const root = useRef(null);
+  const { openLeadForm } = useLeadForm();
 
   useGSAP(
     () => {
@@ -71,8 +73,7 @@ export default function Cta() {
           </p>
 
           <div data-cta="btn" className="mt-10 flex justify-center">
-            {/* TODO: apna booking/contact link yahan daal dena */}
-            <Button href="/contact" >Book a free Discovery Call</Button>
+            <Button onClick={openLeadForm}>Book a free Discovery Call</Button>
           </div>
         </div>
       </div>

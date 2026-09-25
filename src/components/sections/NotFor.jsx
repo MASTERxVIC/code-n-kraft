@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useLeadForm } from "@/components/ui/LeadFormModal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -71,6 +72,7 @@ function TicketRow({ text }) {
 
 export default function NotFor() {
   const root = useRef(null);
+  const { openLeadForm } = useLeadForm();
 
   /* Strips cascade: poora bundle top se strip 1 ki position pe girega,
      phir bacha hua bundle ek-ek slot neeche sarakta jayega — har level pe
@@ -153,9 +155,10 @@ export default function NotFor() {
             </div>
 
             {/* Closing pill */}
-            <a
-              href="#contact"
-              className="nf-pill group mx-auto mt-10 md:mt-[60px] flex max-w-[620px] items-center gap-3 rounded-[10px] bg-[#e3c6f9] py-2.5 px-4 md:h-[49px] md:gap-2 md:py-0 md:px-[14px]"
+            <button
+              type="button"
+              onClick={openLeadForm}
+              className="nf-pill group mx-auto mt-10 md:mt-[60px] flex w-full max-w-[620px] cursor-pointer items-center gap-3 rounded-[10px] bg-[#e3c6f9] py-2.5 px-4 md:h-[49px] md:gap-2 md:py-0 md:px-[14px]"
             >
               <span className="relative shrink-0" aria-hidden="true">
                 <svg
@@ -197,7 +200,7 @@ export default function NotFor() {
                   </clipPath>
                 </defs>
               </svg>
-            </a>
+            </button>
           </div>
         </div>
       </Section>

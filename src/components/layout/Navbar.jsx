@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 
@@ -17,9 +18,14 @@ const links = [
 export default function Navbar() {
   const [footerVisible, setFooterVisible] = useState(false);
   const [beliefVisible, setBeliefVisible] = useState(false);
+  const pathname = usePathname();
 
-  /* Footer viewport me dikhte hi navbar upar slide karke hide ho jayega */
+  /* Footer viewport me dikhte hi navbar upar slide karke hide ho jayega.
+     pathname dep isliye: client-side navigation (jaise /privacy-policy)
+     pe naya footer dobara observe ho — warna observer purane, unmounted
+     footer pe atka rehta aur navbar kabhi hide nahi hota */
   useEffect(() => {
+    setFooterVisible(false);
     const footer = document.querySelector("footer");
     if (!footer) return;
     const obs = new IntersectionObserver(
@@ -28,11 +34,12 @@ export default function Navbar() {
     );
     obs.observe(footer);
     return () => obs.disconnect();
-  }, []);
+  }, [pathname]);
 
   /* Belief (dark) section navbar ko touch karte hi blur hatkar bar
      rock solid ho jayega — links/logo same rahenge */
   useEffect(() => {
+    setBeliefVisible(false);
     const belief = document.getElementById("belief");
     if (!belief) return;
     const obs = new IntersectionObserver(
@@ -41,7 +48,7 @@ export default function Navbar() {
     );
     obs.observe(belief);
     return () => obs.disconnect();
-  }, []);
+  }, [pathname]);
 
   return (
     <header

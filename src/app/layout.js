@@ -2,6 +2,7 @@ import { Bricolage_Grotesque, Geologica, Ephesis } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
+import { LeadFormProvider } from "@/components/ui/LeadFormModal";
 
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
@@ -99,8 +100,10 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <SmoothScroll>
-          <Navbar />
-          {children}
+          <LeadFormProvider>
+            <Navbar />
+            {children}
+          </LeadFormProvider>
         </SmoothScroll>
       </body>
     </html>
