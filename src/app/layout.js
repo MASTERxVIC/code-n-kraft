@@ -39,14 +39,67 @@ export const metadata = {
     description:
       "Website design, development and search visibility (SEO, AEO, GEO) in one studio.",
     url: "/",
+    images: [
+      {
+        url: "/og/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Code 'n' Kraft — Web Design, SEO, AEO & GEO Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Code 'n' Kraft | Web Design, SEO, AEO & GEO Studio",
+    description:
+      "Website design, development and search visibility (SEO, AEO, GEO) in one studio.",
+    images: ["/og/og-image.png"],
   },
   robots: { index: true, follow: true },
+};
+
+// TODO: real domain aate hi SITE_URL badal dena
+// (robots.js / sitemap.js me bhi same value hai, aur metadataBase bhi)
+const SITE_URL = "https://example.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": `${SITE_URL}/#business`,
+      name: "Code 'n' Kraft",
+      url: SITE_URL,
+      description:
+        "Website design, development and search-visibility studio — SEO, AEO and GEO.",
+      areaServed: "IN",
+      knowsAbout: [
+        "Web Design",
+        "Web Development",
+        "Search Engine Optimization",
+        "Answer Engine Optimization",
+        "Generative Engine Optimization",
+      ],
+      sameAs: ["https://www.instagram.com/codenkraft"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Code 'n' Kraft",
+      publisher: { "@id": `${SITE_URL}/#business` },
+    },
+  ],
 };
 
 export default function RootLayout({ children }) {
   return (
     <html className={`${bricolage.variable} ${geologica.variable} ${ephesis.variable}`} lang="en">
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <SmoothScroll>
           <Navbar />
           {children}
