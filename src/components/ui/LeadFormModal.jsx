@@ -34,17 +34,6 @@ const SERVICES = [
   "Others",
 ];
 
-/* BentoGrid cards ke href → service name. BentoGrid.jsx me kuch badle
-   bina, click interception yahin se pata lagata hai kaunsa card daba. */
-const CARD_HREF_TO_SERVICE = {
-  "/services/website-design": "Website Designing",
-  "/services/rebrand": "Rebrand / Rebuild",
-  "/services/geo": "GEO",
-  "/services/seo": "SEO",
-  "/services/aeo": "AEO",
-  "/services/ui-ux": "UI & UX",
-};
-
 const LeadFormContext = createContext(null);
 
 export function useLeadForm() {
@@ -67,26 +56,6 @@ export function LeadFormProvider({ children }) {
     setIsOpen(true);
   }, []);
   const closeLeadForm = useCallback(() => setIsOpen(false), []);
-
-  /* Service card clicks — BentoGrid.jsx ko BILKUL haath lagaye bina.
-     Cards abhi bhi <a href="/services/..."> hain; yeh document-level
-     listener un clicks ko pakad ke dead link pe jaane ke bajaye
-     form kholta hai (clicked service pre-selected). */
-  useEffect(() => {
-    const onClick = (e) => {
-      // sirf plain left-click; ctrl/middle-click waghera ko chhodo
-      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
-        return;
-      const card = e.target?.closest?.("a.bento-card");
-      if (!card) return;
-      const service = CARD_HREF_TO_SERVICE[card.getAttribute("href")];
-      if (!service) return;
-      e.preventDefault();
-      openLeadForm(service);
-    };
-    document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
-  }, [openLeadForm]);
 
   return (
     <LeadFormContext.Provider
