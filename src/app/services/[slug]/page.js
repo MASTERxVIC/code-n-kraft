@@ -6,6 +6,7 @@ import Section from "@/components/ui/Section";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ServiceFaq from "@/components/services/ServiceFaq";
 import ServiceCtaButton from "@/components/services/ServiceCtaButton";
+import ScrollToTop from "@/components/services/ScrollToTop";
 import { getAllSlugs, getService, getRelated, SITE_URL } from "@/data/services";
 
 /* ---------- Static generation: 6 service pages ---------- */
@@ -99,6 +100,7 @@ export default async function ServicePage({ params }) {
 
   return (
     <>
+      <ScrollToTop slug={s.slug} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -133,7 +135,11 @@ export default async function ServicePage({ params }) {
             ))}
           </div>
           <div className="mt-10">
-            <ServiceCtaButton preset={s.preset} width="w-auto md:w-auto">
+            <ServiceCtaButton
+              preset={s.preset}
+              width="w-auto md:w-auto"
+              className="max-md:text-[15px]"
+            >
               Get a quote for {s.title}
             </ServiceCtaButton>
           </div>

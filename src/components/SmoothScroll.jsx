@@ -15,6 +15,8 @@ export default function SmoothScroll({ children }) {
     if (prefersReducedMotion) return // normal browser scroll rehne do
 
     const lenis = new Lenis({ duration: 1.2 })
+    // Service pages ko slug-change pe top pe le jane ke liye handle expose
+    window.__lenis = lenis
     lenis.on('scroll', ScrollTrigger.update)
 
     // Anchor links (#id) pe Lenis smooth scroll — browser ka direct
@@ -69,6 +71,7 @@ export default function SmoothScroll({ children }) {
     return () => {
       document.removeEventListener('click', onClick)
       gsap.ticker.remove(tick)
+      window.__lenis = null
       lenis.destroy()
     }
   }, [])
