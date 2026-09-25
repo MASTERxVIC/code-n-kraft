@@ -77,7 +77,7 @@ const linkCls =
 
 function SocialIcons() {
   return (
-    <div className="flex flex-col items-center gap-9">
+    <div className="flex flex-row items-center gap-5 md:flex-col md:gap-9">
       <a href="#" aria-label="LinkedIn" className="transition-transform hover:scale-110">
         <img src="/assets/LinkedIn.svg" alt="LinkedIn" className="h-5 w-5" />
       </a>
@@ -173,18 +173,17 @@ export default function Footer() {
           Ink, Kraft, And Code — Same Care Every Time
         </p>
 
-        {/* main grid — desktop pe 3 col x 2 rows:
-            row 1: Quick Access | logo | Social Links
-            row 2: Contact Info  | logo | Legal
-            taaki Contact Info aur Legal ki headings ek hi line pe aayen */}
-        <div className="grid grid-cols-1 gap-x-12 gap-y-16 py-16 md:grid-cols-3 md:gap-y-24 md:py-24">
+        {/* main grid —
+            mobile (2 col): Quick Access | Contact Info / Social Links | Legal
+            desktop (3 col): Quick Access | logo | Social Links / Contact Info | logo | Legal */}
+        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-16 md:grid-cols-3 md:gap-x-12 md:gap-y-24 md:py-24">
           {/* row 1, col 1 — quick access */}
           <div
             data-footer="reveal"
-            className="flex flex-col items-center text-center md:col-start-1 md:row-start-1"
+            className="col-start-1 row-start-1 flex flex-col items-start text-left md:col-start-1 md:row-start-1 md:items-center md:text-center"
           >
             <p className={labelCls}>Quick Access</p>
-            <ul className="mt-7 flex flex-col items-center gap-7">
+            <ul className="mt-7 flex flex-col items-start gap-5 md:items-center md:gap-7">
               {QUICK_ACCESS.map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className={linkCls}>
@@ -198,10 +197,10 @@ export default function Footer() {
           {/* row 2, col 1 — contact info */}
           <div
             data-footer="reveal"
-            className="flex flex-col items-center text-center md:col-start-1 md:row-start-2"
+            className="col-start-2 row-start-1 flex flex-col items-start text-left md:col-start-1 md:row-start-2 md:items-center md:text-center"
           >
             <p className={labelCls}>Contact Info</p>
-            <p className="mt-7 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50">
+            <p className="mt-7 flex items-center justify-start gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
               Email
             </p>
             <a
@@ -210,7 +209,7 @@ export default function Footer() {
             >
               katel2k69@gmail.com
             </a>
-            <p className="mt-9 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50">
+            <p className="mt-9 flex items-center justify-start gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
               Phone Number
             </p>
             {/* asli number aane pe yahan daal dena */}
@@ -247,7 +246,7 @@ export default function Footer() {
           {/* row 1, col 3 — social links */}
           <div
             data-footer="reveal"
-            className="flex flex-col items-center text-center md:col-start-3 md:row-start-1"
+            className="col-start-1 row-start-2 flex flex-col items-start text-left md:col-start-3 md:row-start-1 md:items-center md:text-center"
           >
             <p className={labelCls}>Social Links</p>
             <div className="mt-7">
@@ -258,10 +257,10 @@ export default function Footer() {
           {/* row 2, col 3 — legal */}
           <div
             data-footer="reveal"
-            className="flex flex-col items-center text-center md:col-start-3 md:row-start-2"
+            className="col-start-2 row-start-2 flex flex-col items-start text-left md:col-start-3 md:row-start-2 md:items-center md:text-center"
           >
             <p className={labelCls}>Legal</p>
-            <ul className="mt-7 flex flex-col items-center gap-7">
+            <ul className="mt-7 flex flex-col items-start gap-5 md:items-center md:gap-7">
               {LEGAL.map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className={linkCls}>

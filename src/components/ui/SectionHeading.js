@@ -7,6 +7,7 @@ export default function SectionHeading({
   tone = "light",
   as: Tag = "h2",
   className = "",
+  titleClassName = "",
 }) {
   const center = align === "center";
   const dark = tone === "dark";
@@ -28,9 +29,12 @@ export default function SectionHeading({
       )}
 
       <Tag
-        className={`max-w-[1100px] text-3xl md:text-[2.5rem] font-bold font-display uppercase leading-[1.25] tracking-wider ${
-          dark ? "text-on-dark" : "text-heading"
-        }`}
+        className={
+          titleClassName ||
+          `max-w-[1100px] text-lg md:text-[2.5rem] font-bold font-display uppercase leading-[1.25] tracking-wider ${
+            dark ? "text-on-dark" : "text-heading"
+          }`
+        }
       >
         {title}
       </Tag>
@@ -38,7 +42,7 @@ export default function SectionHeading({
       {subtitle && <p className="mt-4 text-xl font-body">{subtitle}</p>}
 
       {children && (
-        <div className="mt-6 md:mt-8 max-w-[1100px] text-base leading-[1.9] tracking-wider">
+        <div className="mt-6 md:mt-8 max-w-[1100px] text-base leading-7 md:leading-[1.9] tracking-wider">
           {children}
         </div>
       )}

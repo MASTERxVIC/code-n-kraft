@@ -44,11 +44,14 @@ function StripBg() {
 function TicketRow({ text }) {
   return (
     <div className="nf-strip">
-      {/* Mobile (below md): clean pill instead of the strip artwork */}
+      {/* Mobile (below md): site Button jaisa shape — white bg, rounded-[20px],
+          purple border, font-body text (koi arrow nahi) */}
       <div className="md:hidden">
-        <p className="rounded-full bg-[#643F80]/80 px-6 py-3.5 text-center font-display text-[13px] leading-relaxed text-white">
-          {text}
-        </p>
+        <div className="w-full overflow-hidden rounded-[20px] border border-button bg-surface px-6 py-3.5">
+          <p className="font-body text-[15px] leading-snug text-heading">
+            {text}
+          </p>
+        </div>
       </div>
 
       {/* Desktop: exact Figma strip (675x51). Text is left-aligned — every

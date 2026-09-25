@@ -2,7 +2,7 @@
 import Link from "next/link";
 
 const baseClasses =
-  "group relative inline-flex max-w-full items-center justify-between overflow-hidden rounded-[20px] bg-surface pl-[38px] pr-2 font-serif text-lg italic text-black transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-supportive border border-button";
+  "group relative inline-flex max-w-full items-center justify-between overflow-hidden rounded-[20px] bg-surface pl-[38px] pr-2 font-serif md:text-lg italic text-black transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-supportive border border-button";
 
 function ArrowIcon() {
   return (
@@ -52,7 +52,7 @@ function Inner({ children, icon }) {
 export default function Button({
   href,
   icon,
-  width = "w-[327px]",   // Default Width
+  width = "md:w-[327px]",   // Default Width
   height = "h-[49px]",   // Default Height
   className = "",
   children,

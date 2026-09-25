@@ -113,8 +113,8 @@ export default function WorkInfo() {
           <div className="mt-16 md:mt-1 space-y-14 md:space-y-2">
             {/* Row 1 — First-Timers: text + image as ONE centered unit */}
             <div className="flex flex-col items-center gap-10 md:flex-row md:items-center md:justify-center md:gap-10">
-              <p className="wi-fade max-w-xl md:max-w-3xl font-body font-light text-lg md:text-md leading-relaxed text-heading/80">
-                <span className="font-display font-medium text-[24px] text-heading">
+              <p className="wi-fade max-w-xl md:max-w-3xl font-body font-light text-sm md:text-base leading-relaxed text-heading/80">
+                <span className="font-display font-medium text-lg md:text-[24px] text-heading">
                   First-Timers
                 </span>
                 {" — "}
@@ -143,8 +143,8 @@ export default function WorkInfo() {
                   className={duotoneCls}
                 />
               </div>
-              <p className="wi-fade max-w-xl md:max-w-3xl order-1 md:order-2 font-body font-light text-lg md:text-md leading-relaxed text-heading/80">
-                <span className="font-display font-medium text-[24px] text-heading">
+              <p className="wi-fade max-w-xl md:max-w-3xl order-1 md:order-2 font-body font-light text-sm md:text-base leading-relaxed text-heading/80">
+                <span className="font-display font-medium text-lg md:text-[24px] text-heading">
                   Rebrands &amp; Rebuilds
                 </span>
                 {" — "}
@@ -155,8 +155,8 @@ export default function WorkInfo() {
             </div>
 
             {/* Note — centered */}
-            <p className="wi-fade md:-translate-y-20 pt-2 text-center font-body font-light text-lg md:text-md leading-relaxed text-heading/80">
-              <span className="font-display font-medium text-heading text-[24px]">Note</span>
+            <p className="wi-fade md:-translate-y-20 pt-2 text-center font-body font-light text-sm md:text-base leading-relaxed text-heading/80">
+              <span className="font-display font-medium text-heading text-lg md:text-[24px]">Note</span>
               {" — "}
               Either way, you get the same obsessive standard of work.
             </p>

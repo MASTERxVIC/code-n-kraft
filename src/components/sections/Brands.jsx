@@ -27,8 +27,9 @@ export default function Brands() {
               }
               align="left"
               className="w-full"
+              titleClassName="max-w-[1100px] text-lg md:text-[2.5rem] font-bold font-display uppercase leading-[1.25] tracking-wider text-heading"
             >
-              <p className="text-heading/80 font-light">
+              <p className="text-heading/80 font-light text-sm md:text-base leading-7 md:leading-[1.9]">
                 Design, development and search visibility — engineered together,
                 not stitched together. <br /> From the first pixel to the first
                 page-one ranking, every detail is built to be noticed.
@@ -38,7 +39,7 @@ export default function Brands() {
 
           <div className="w-full mt-12 md:mt-20 flex flex-col items-center">
             <Reveal delay={0.15}>
-              <h3 className="font-body text-heading text-lg mb-8 text-center border-b border-heading/20 pb-1">
+              <h3 className="font-body text-heading text-sm md:text-lg mb-8 text-center border-b border-heading/20 pb-1">
                 Brands
               </h3>
             </Reveal>

@@ -10,15 +10,7 @@ import Button from "../ui/Button";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/* ------------------------------------------------------------------ */
-/*  BELIEF — "What we believe"                                          */
-/*  - Section + SectionHeading components ka estemaal                   */
-/*  - Background: bg-heading (#44394c), highlight: text-button (#e3c6f9)*/
-/*  - Figma me dark bg pe halka brush-circle texture hai — uska asset   */
-/*    mile toh background me add kar dunga                              */
-/*  NOTE: pb-24 md:pb-[150px] wrapper — section height ProofVault/      */
-/*  NotFor se match karne ke liye (NotFor wali pb convention).         */
-/* ------------------------------------------------------------------ */
+
 
 const STATEMENTS = [
     "A website is the most honest thing a brand owns \u2014 it either proves you\u2019re serious. Or it proves you\u2019re not. Speed without care is just a faster way to look forgettable. Being found by Google isn\u2019t enough anymore \u2014 you have to be found by AI, too. We don\u2019t cheat our clients, we don\u2019t cut corners, and we don\u2019t ship work we wouldn\u2019t put our own name on.",
@@ -131,19 +123,19 @@ export default function Belief() {
           {STATEMENTS.map((statement) => (
             <p
               key={statement}
-              className="bl-para font-light text-base leading-loose tracking-wide text-justify text-white/90 md:text-md"
+              className="bl-para font-light leading-loose tracking-wide text-justify text-white/90 text-sm md:text-base"
             >
               {statement}
             </p>
           ))}
         </div>
 
-        <div className="mt-32 flex flex-col items-center justify-center gap-6 sm:flex-row md:mt-80 md:gap-60">
+        <div className="mt-32 flex flex-row items-center justify-center gap-5 sm:flex-row md:mt-80 md:gap-60">
           <div className="bl-agree">
-            <Button icon={<CheckIcon />} width="w-[220px]">Agreed</Button>
+            <Button icon={<CheckIcon />} width="md:w-[220px] w-[180px] text-sm">Agreed</Button>
           </div>
           <div className="bl-disagree">
-            <Button icon={<CrossIcon />} width="w-[220px]">Not Agreed</Button>
+            <Button icon={<CrossIcon />} width="md:w-[220px] w-[180px] text-sm">Not Agreed</Button>
           </div>
         </div>
       </div>

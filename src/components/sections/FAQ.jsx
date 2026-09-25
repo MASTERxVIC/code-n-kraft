@@ -8,14 +8,6 @@ import Section from "../ui/Section";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-/* ------------------------------------------------------------------ */
-/*  QUESTIONS WE GET ASKED — FAQ accordion                             */
-/*  Click pe question bar light purple hota hai, answer peeche se      */
-/*  slide karke bahar aata hai. QUESTIONS array me edit kar lena.      */
-/*  NOTE: pb-24 md:pb-[120px] — section height ProofVault/NotFor se    */
-/*  match karne ke liye (NotFor wali pb convention, min-h nahi).      */
-/* ------------------------------------------------------------------ */
-
 const QUESTIONS = [
   {
     q: "How Long Does A Project Take?",
@@ -30,7 +22,7 @@ const QUESTIONS = [
     a: "Yes. Every project includes structured revision rounds at design and build stages.",
   },
   {
-    q: "Will My Site Rank On Google — And AI Search?",
+    q: "Will My Site Rank On Google And AI Search?",
     a: "That's the whole point. Every site we ship is built SEO-first, and structured for GEO/AEO.",
   },
   {
@@ -43,18 +35,18 @@ const QUESTIONS = [
    hota hai, open bullet usi spin ke end me fade-in hota hai. */
 function BulletIcon({ open }) {
   return (
-    <span className="relative block h-8 w-8 shrink-0" aria-hidden="true">
+    <span className="relative block md:h-8 md:w-8 h-4 w-4 shrink-0" aria-hidden="true">
       <img
         src="/assets/Bullet_Points.svg"
         alt=""
-        className={`absolute inset-0 h-8 w-8 transition-all duration-500 ease-in-out ${
+        className={`absolute inset-0 h-4 w-4 md:h-8 md:w-8 transition-all duration-500 ease-in-out ${
           open ? "rotate-180 opacity-0" : "rotate-0 opacity-100"
         }`}
       />
       <img
         src="/assets/Bullet_Points-2.svg"
         alt=""
-        className={`absolute inset-0 h-8 w-8 transition-opacity delay-100 duration-500 ease-in-out ${
+        className={`absolute inset-0 h-4 w-4 md:h-8 md:w-8 transition-opacity delay-100 duration-500 ease-in-out ${
           open ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -66,18 +58,18 @@ function BulletIcon({ open }) {
    aur fade hota hai, dark down chevron usi spin ke end me fade-in hota hai. */
 function ChevronIcon({ open }) {
   return (
-    <span className="relative block h-8 w-8 shrink-0" aria-hidden="true">
+    <span className="relative block md:h-8 md:w-8 w-4 h-4 shrink-0" aria-hidden="true">
       <img
         src="/assets/akar-icons_circle-chevron-right.svg"
         alt=""
-        className={`absolute inset-0 h-8 w-8 transition-all duration-500 ease-in-out ${
+        className={`absolute inset-0 h-4 w-4 md:h-8 md:w-8 transition-all duration-500 ease-in-out ${
           open ? "rotate-90 opacity-0" : "rotate-0 opacity-100"
         }`}
       />
       <img
         src="/assets/akar-icons_circle-chevron-down.svg"
         alt=""
-        className={`absolute inset-0 h-8 w-8 transition-opacity delay-100 duration-500 ease-in-out ${
+        className={`absolute inset-0 h-4 w-4 md:h-8 md:w-8 transition-opacity delay-100 duration-500 ease-in-out ${
           open ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -99,7 +91,7 @@ function FaqItem({ q, a, open, onToggle }) {
       >
         <BulletIcon open={open} />
         <span
-          className={`flex-1 font-display text-[17px] leading-snug ${
+          className={`flex-1 font-display text-sm md:text-[17px] leading-snug ${
             open ? "text-heading" : "text-white"
           }`}
         >
@@ -115,10 +107,8 @@ function FaqItem({ q, a, open, onToggle }) {
         }`}
       >
         <div className="overflow-hidden">
-          {/* -mt-10 tucks the top behind the pill, mx-4 insets sides,
-              rounded top corners + button border match the design screenshot */}
-          <div className="mx-4 -mt-10 rounded-[20px] border-2 border-button bg-heading px-8 pb-8 pt-16">
-            <p className="text-center font-body text-[15px] leading-relaxed text-white/90">
+          <div className="mx-4 -mt-10 rounded-[20px] border-2 border-button bg-heading px-3 md:px-8 pb-4 md:pb-8 pt-16">
+            <p className="text-center font-body  text-sm md:text-[15px] leading-relaxed text-white/90">
               {a}
             </p>
           </div>
@@ -195,7 +185,7 @@ export default function Faq() {
           <p className="text-center text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60">
             Before You Sign On
           </p>
-          <h2 className="mt-3 text-center font-display text-[34px] font-bold leading-tight text-heading md:text-[40px]">
+          <h2 className="mt-3 text-center font-display text-lg font-bold leading-tight text-heading md:text-[40px]">
             QUESTIONS WE GET ASKED
           </h2>
         </div>

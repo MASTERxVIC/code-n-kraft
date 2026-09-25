@@ -28,14 +28,12 @@ export default function ProblemWeSolve() {
               align="left"
               className="w-full"
             >
-              <p className="text-heading/80 font-light">
+              <p className="text-heading/80 font-light text-justify">
                 A website that just "exists" is invisible the moment it launches.
-                Search engines don't find it.
-                <br />
-                AI answer engines don't cite it. Customers don't remember it. We
-                treat your website as <br />
+                Search engines don't find it. 
+                <br className="hidden md:block" />{" "}AI answer engines don't cite it. Customers don't remember it. We treat your website as <br className="hidden md:block" />
                 infrastructure for your entire brand — built with design, code,
-                and search strategy working <br /> as one system from day one, not
+                and search strategy working <br className="hidden md:block" /> as one system from day one, not
                 bolted together afterward.
               </p>
             </SectionHeading>
