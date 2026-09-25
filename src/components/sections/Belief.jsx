@@ -1,6 +1,14 @@
+"use client";
+
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* ------------------------------------------------------------------ */
 /*  BELIEF — "What we believe"                                          */
@@ -58,26 +66,72 @@ function CrossIcon() {
 }
 
 export default function Belief() {
+  const root = useRef(null);
+
+  /* Heading + paragraphs reveal, Agreed left se, Not Agreed right se */
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const q = gsap.utils.selector(root);
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+      });
+
+      tl.fromTo(
+        q(".bl-heading"),
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0
+      );
+
+      tl.fromTo(
+        q(".bl-para"),
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.12 },
+        0.15
+      );
+
+      tl.fromTo(
+        q(".bl-agree"),
+        { x: -64, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0.45
+      );
+
+      tl.fromTo(
+        q(".bl-disagree"),
+        { x: 64, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0.45
+      );
+    },
+    { scope: root }
+  );
+
   return (
-    <Section id="belief" tone="transparent" className=" text-white">
+    <div ref={root}>
+    <Section id="belief" tone="transparent" noReveal className=" text-white">
       <div className="pb-24 md:pb-[150px]">
-        <SectionHeading
-          badge="Our Belief"
-          title={
-            <span className="font-serif text-surface">
-              What we <span className="text-button">believe</span>
-            </span>
-          }
-          align="left"
-          tone="dark"
-          className="w-full"
-        />
+        <div className="bl-heading">
+          <SectionHeading
+            badge="Our Belief"
+            title={
+              <span className="font-serif text-surface">
+                What we <span className="text-button">believe</span>
+              </span>
+            }
+            align="left"
+            tone="dark"
+            className="w-full"
+          />
+        </div>
 
         <div className="mt-10 max-w-4xl space-y-5">
           {STATEMENTS.map((statement) => (
             <p
               key={statement}
-              className="font-light text-base leading-loose tracking-wide text-justify text-white/90 md:text-md"
+              className="bl-para font-light text-base leading-loose tracking-wide text-justify text-white/90 md:text-md"
             >
               {statement}
             </p>
@@ -85,10 +139,15 @@ export default function Belief() {
         </div>
 
         <div className="mt-32 flex flex-col items-center justify-center gap-6 sm:flex-row md:mt-80 md:gap-60">
-          <Button icon={<CheckIcon />} width="w-[220px]">Agreed</Button>
-          <Button icon={<CrossIcon />} width="w-[220px]">Not Agreed</Button>
+          <div className="bl-agree">
+            <Button icon={<CheckIcon />} width="w-[220px]">Agreed</Button>
+          </div>
+          <div className="bl-disagree">
+            <Button icon={<CrossIcon />} width="w-[220px]">Not Agreed</Button>
+          </div>
         </div>
       </div>
     </Section>
+    </div>
   );
 }

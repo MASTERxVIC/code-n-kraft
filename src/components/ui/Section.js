@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { Reveal } from "@/components/core/reveal";
 
 const tones = {
   light: "bg-bg",
@@ -11,12 +12,16 @@ const Section = forwardRef(function Section(
     id,
     tone = "light",
     noPadding = false,
+    noReveal = false,
     className = "",
     children,
     ...props
   },
   ref
 ) {
+  const innerClass = `relative mx-auto max-w-[1440px] px-[var(--gutter)] ${
+    noPadding ? "" : "py-12 md:py-16"
+  } ${className}`;
   return (
     <section
       ref={ref}
@@ -24,13 +29,11 @@ const Section = forwardRef(function Section(
       className={`${tones[tone]} scroll-mt-[var(--nav-h)]`}
       {...props}
     >
-      <div
-        className={`relative mx-auto max-w-[1440px] px-[var(--gutter)] ${
-          noPadding ? "" : "py-12 md:py-16"
-        } ${className}`}
-      >
-        {children}
-      </div>
+      {noReveal ? (
+        <div className={innerClass}>{children}</div>
+      ) : (
+        <Reveal className={innerClass}>{children}</Reveal>
+      )}
     </section>
   );
 });

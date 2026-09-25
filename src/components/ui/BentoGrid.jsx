@@ -1,5 +1,13 @@
+"use client";
+
+import { useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ArrowButton from "./ArrowIcon";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 
 function Card({ href = "#", tone = "light", className = "", children }) {
@@ -9,7 +17,7 @@ function Card({ href = "#", tone = "light", className = "", children }) {
   return (
     <a
       href={href}
-      className={`group relative flex overflow-hidden rounded-[20px] p-6 transition-all duration-300 ${toneClasses} ${className}`}
+      className={`bento-card group relative flex overflow-hidden rounded-[20px] p-6 transition-all duration-300 ${toneClasses} ${className}`}
     >
       {children}
       <ArrowButton tone={tone} />
@@ -146,8 +154,38 @@ function BentoMobile() {
 }
 
 export default function BentoGrid() {
+  const root = useRef(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const q = gsap.utils.selector(root);
+
+      // Cards ka soft entrance — halka rise + fade, ek-ek karke
+      gsap.fromTo(
+        q(".bento-card"),
+        { y: 28, opacity: 0, scale: 0.97, transformOrigin: "center" },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.09,
+          scrollTrigger: {
+            trigger: root.current,
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    },
+    { scope: root }
+  );
+
   return (
     <section
+      ref={root}
       aria-label="Services"
       className="relative mx-auto w-full max-w-[1248px]"
     >

@@ -1,8 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* Exact path exported from Figma (Vector_1) */
 const JOURNEY_PATH =
@@ -106,25 +111,105 @@ function Tooltip({ tip }) {
 
 export default function ProcessJourney() {
   const [hovered, setHovered] = useState(null);
+  const root = useRef(null);
+  const maskPath = useRef(null);
+
+  useGSAP(
+    () => {
+      const svg = root.current?.querySelector("svg");
+      const mp = maskPath.current;
+      if (!svg || !mp) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      const q = gsap.utils.selector(root);
+      const len = mp.getTotalLength();
+
+      /* Path ke kis fraction par node ka center hai — sampling se nikaalo */
+      const fractionAt = (cx, cy) => {
+        let best = 0;
+        let bestD = Infinity;
+        const N = 500;
+        for (let i = 0; i <= N; i++) {
+          const p = mp.getPointAtLength((len * i) / N);
+          const d = (p.x - cx) ** 2 + (p.y - cy) ** 2;
+          if (d < bestD) {
+            bestD = d;
+            best = i / N;
+          }
+        }
+        return best;
+      };
+      const fracs = STEPS.map((s) => fractionAt(s.cx, s.cy));
+
+      const DRAW = 4; // path draw duration (sec) — constant speed = path pe chalne jaisa
+
+      /* Mask path ko shuru me poora chhupao */
+      gsap.set(mp, { strokeDasharray: len, strokeDashoffset: len });
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: svg, start: "top 78%", once: true },
+      });
+
+      /* Heading pehle */
+      tl.fromTo(
+        q(".pj-heading"),
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0
+      );
+
+      /* Dashed path mask ke through dheere-dheere draw hoga */
+      tl.to(mp, { strokeDashoffset: 0, duration: DRAW, ease: "none" }, 0.25);
+
+      /* Number nodes: path jahan pahunche, wahan node pop */
+      q(".pj-node").forEach((node, i) => {
+        const s = STEPS[i];
+        tl.fromTo(
+          node,
+          { scale: 0, autoAlpha: 0, svgOrigin: `${s.cx} ${s.cy}` },
+          {
+            scale: 1,
+            autoAlpha: 1,
+            duration: 0.55,
+            ease: "back.out(2.2)",
+          },
+          0.25 + fracs[i] * DRAW
+        );
+      });
+
+      /* Footnote aakhir me */
+      tl.fromTo(
+        q(".pj-note"),
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+        0.25 + DRAW - 0.4
+      );
+    },
+    { scope: root }
+  );
 
   return (
-    <Section
-      id="process"
-      tone="transparent"
-      className="bg-transparent px-0"
-    >
+    <div ref={root}>
+      <Section
+        id="process"
+        tone="transparent"
+        noReveal
+        className="bg-transparent px-0"
+      >
         <style>{`@keyframes journey-tip-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
         <div className="w-full max-w-[1289px] mx-auto px-4 md:px-0">
-          <SectionHeading
-            badge="Behind the work"
-            title={
-              <span className="uppercase font-display">
-                How a project actually happens
-              </span>
-            }
-            align="left"
-            className="w-full"
-          />
+          <div className="pj-heading">
+            <SectionHeading
+              badge="Behind the work"
+              title={
+                <span className="uppercase font-display">
+                  How a project actually happens
+                </span>
+              }
+              align="left"
+              className="w-full"
+            />
+          </div>
 
           {/* Journey timeline — one SVG so path + nodes scale together.
               On small screens it scrolls horizontally instead of squishing.
@@ -132,28 +217,49 @@ export default function ProcessJourney() {
               content bounds — the page-level watermark logo scales with section
               height (object-contain), so this keeps it the same size as the
               "Two Kinds of Clients" section. Diagram itself renders unchanged. */}
-          <div className="mt-10 md:mt-14 overflow-x-auto pb-4">
+          <div className="mt-10 md:mt-14 overflow-x-auto overflow-y-hidden pb-4">
             <svg
               viewBox="-40 -77 1260 662"
               className="h-auto w-full min-w-[760px]"
               role="img"
               aria-label="How a project actually happens: discovery, design, development, search optimization, quality pass, launch and support"
             >
-              {/* Exact dashed path from Figma */}
-              <path
-                d={JOURNEY_PATH}
-                fill="none"
-                stroke="#44394c"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeDasharray="8 8"
-              />
+              <defs>
+                <mask
+                  id="journey-draw-mask"
+                  maskUnits="userSpaceOnUse"
+                  x="-100"
+                  y="-160"
+                  width="1420"
+                  height="820"
+                >
+                  <path
+                    ref={maskPath}
+                    d={JOURNEY_PATH}
+                    fill="none"
+                    stroke="#ffffff"
+                    strokeWidth="16"
+                  />
+                </mask>
+              </defs>
 
-              {/* Nodes — hovering (or tapping / keyboard focus) shows the tooltip */}
+              {/* Exact dashed path from Figma — mask se dheere-dheere reveal hoga */}
+              <g mask="url(#journey-draw-mask)">
+                <path
+                  d={JOURNEY_PATH}
+                  fill="none"
+                  stroke="#44394c"
+                  strokeWidth="4"
+                  strokeLinecap="round"
+                  strokeDasharray="8 8"
+                />
+              </g>
+
+              {/* Nodes — path ke saath pop honge; hovering (or tapping / keyboard focus) shows the tooltip */}
               {STEPS.map((s) => (
                 <g
                   key={s.n}
-                  className="cursor-pointer outline-none"
+                  className="pj-node cursor-pointer outline-none"
                   tabIndex={0}
                   onMouseEnter={() => setHovered(s.n)}
                   onMouseLeave={() => setHovered(null)}
@@ -193,7 +299,7 @@ export default function ProcessJourney() {
 
             {/* Footnote */}
             <p
-              className="mt-2 text-right font-body text-[11px] font-semibold uppercase leading-relaxed tracking-[0.15em] text-heading/50"
+              className="pj-note mt-2 text-right font-body text-[11px] font-semibold uppercase leading-relaxed tracking-[0.15em] text-heading/50"
             >
               This takes longer than most agencies.
               <br />
@@ -202,5 +308,6 @@ export default function ProcessJourney() {
           </div>
         </div>
       </Section>
+    </div>
   );
 }

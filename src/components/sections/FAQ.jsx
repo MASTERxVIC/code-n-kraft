@@ -1,7 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Section from "../ui/Section";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* ------------------------------------------------------------------ */
 /*  QUESTIONS WE GET ASKED — FAQ accordion                             */
@@ -82,7 +87,7 @@ function ChevronIcon({ open }) {
 
 function FaqItem({ q, a, open, onToggle }) {
   return (
-    <div className="relative">
+    <div className="faq-item relative">
       {/* Question bar — dark when closed, light purple when open. z-10 keeps it above the answer. */}
       <button
         type="button"
@@ -125,6 +130,38 @@ function FaqItem({ q, a, open, onToggle }) {
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState(-1);
+  const root = useRef(null);
+
+  /* Odd items (1st, 3rd, 5th) left se aayenge, even items (2nd, 4th)
+     right se — alternate wahi direction follow karega. */
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const q = gsap.utils.selector(root);
+      const items = q(".faq-item");
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+      });
+
+      tl.fromTo(
+        q(".faq-heading"),
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0
+      );
+
+      items.forEach((el, i) => {
+        tl.fromTo(
+          el,
+          { x: i % 2 === 0 ? -80 : 80, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+          0.15 + i * 0.12
+        );
+      });
+    },
+    { scope: root }
+  );
 
   /* FAQPage JSON-LD — Google rich results + AI engines ke liye */
   const faqJsonLd = {
@@ -149,15 +186,19 @@ export default function Faq() {
     <Section
       id="faq"
       tone="transparent"
+      noReveal
       className="bg-transparent px-0"
     >
+      <div ref={root}>
       <div className="mx-auto w-full max-w-[1289px] px-4 pb-24 md:px-0 md:pb-[120px]">
-        <p className="text-center text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60">
-          Before You Sign On
-        </p>
-        <h2 className="mt-3 text-center font-display text-[34px] font-bold leading-tight text-heading md:text-[40px]">
-          QUESTIONS WE GET ASKED
-        </h2>
+        <div className="faq-heading">
+          <p className="text-center text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60">
+            Before You Sign On
+          </p>
+          <h2 className="mt-3 text-center font-display text-[34px] font-bold leading-tight text-heading md:text-[40px]">
+            QUESTIONS WE GET ASKED
+          </h2>
+        </div>
 
         <div className="mx-auto mt-10 flex w-full max-w-[900px] flex-col gap-5">
           {QUESTIONS.map((item, i) => (
@@ -170,6 +211,7 @@ export default function Faq() {
             />
           ))}
         </div>
+      </div>
       </div>
     </Section>
     </>

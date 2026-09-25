@@ -1,6 +1,13 @@
+"use client";
 
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const ITEMS = [
   "You Want A Website \u201cBy Tomorrow\u201d \u2013 We Don\u2019t Rush Craftsmanship",
@@ -36,7 +43,7 @@ function StripBg() {
 
 function TicketRow({ text }) {
   return (
-    <>
+    <div className="nf-strip">
       {/* Mobile (below md): clean pill instead of the strip artwork */}
       <div className="md:hidden">
         <p className="rounded-full bg-[#643F80]/80 px-6 py-3.5 text-center font-display text-[13px] leading-relaxed text-white">
@@ -55,84 +62,142 @@ function TicketRow({ text }) {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
 export default function NotFor() {
-  return (
-    <Section id="not-for" tone="transparent" className="bg-transparent px-0">
-      {/* NOTE: no local CSS watermark here — the page-level WatermarkWrapper
-          (page.jsx) provides the logo watermark. md:pb bumped 208→238px so the
-          section height (and thus the watermark logo size) matches the "Two
-          Kinds of Clients" section. */}
-      <div
-        className="w-full max-w-[1289px] mx-auto px-4 md:px-0 pb-24 md:pb-[120px]"
-      >
-        <SectionHeading
-          badge="Just as importantly"
-          title={
-            <span className="uppercase font-display">Who we&rsquo;re not for</span>
-          }
-          align="center"
-          className="w-full"
-        />
+  const root = useRef(null);
 
-        <div className="mx-auto mt-10 md:mt-[60px] max-w-[760px]">
-          <div className="mx-auto max-w-[675px] space-y-6 md:space-y-[71px]">
-            {ITEMS.map((t) => (
-              <TicketRow key={t} text={t} />
-            ))}
+  /* Strips cascade: poora bundle top se strip 1 ki position pe girega,
+     phir bacha hua bundle ek-ek slot neeche sarakta jayega — har level pe
+     ek strip apne ghar pe reh jayegi. Slot ka faasla runtime pe naapa
+     jata hai (space-y gaps), hardcode nahi. */
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const q = gsap.utils.selector(root);
+      const strips = q(".nf-strip");
+      if (strips.length < 2) return;
+
+      const step = strips[1].offsetTop - strips[0].offsetTop;
+      const DROP = 600;
+
+      // Shuruaat: saari strips ek bundle me upar (strip 1 ki position pe stack)
+      strips.forEach((el, i) => gsap.set(el, { y: -(i * step) - DROP }));
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+      });
+
+      // Heading
+      tl.fromTo(
+        q(".nf-heading"),
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0
+      );
+
+      // Poora bundle top se strip 1 ki position pe gire
+      tl.to(strips, { y: `+=${DROP}`, duration: 0.7, ease: "power2.in" }, 0.3);
+
+      // Baaki ka bundle ek-ek slot neeche: 1->2, phir 2->3, phir 3->4
+      for (let k = 1; k < strips.length; k++) {
+        tl.to(Array.from(strips).slice(k), {
+          y: `+=${step}`,
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      }
+
+      // Closing pill aakhir me
+      tl.fromTo(
+        q(".nf-pill"),
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
+        "-=0.25"
+      );
+    },
+    { scope: root }
+  );
+
+  return (
+    <div ref={root}>
+      <Section id="not-for" tone="transparent" noReveal className="bg-transparent px-0">
+        {/* NOTE: no local CSS watermark here — the page-level WatermarkWrapper
+            (page.jsx) provides the logo watermark. md:pb bumped 208→238px so the
+            section height (and thus the watermark logo size) matches the "Two
+            Kinds of Clients" section. */}
+        <div
+          className="w-full max-w-[1289px] mx-auto px-4 md:px-0 pb-24 md:pb-[120px]"
+        >
+          <div className="nf-heading">
+            <SectionHeading
+              badge="Just as importantly"
+              title={
+                <span className="uppercase font-display">Who we&rsquo;re not for</span>
+              }
+              align="center"
+              className="w-full"
+            />
           </div>
 
-          {/* Closing pill */}
-          <a
-            href="#contact"
-            className="group mx-auto mt-10 md:mt-[60px] flex max-w-[620px] items-center gap-3 rounded-[10px] bg-[#e3c6f9] py-2.5 px-4 md:h-[49px] md:gap-2 md:py-0 md:px-[14px]"
-          >
-            <span className="relative shrink-0" aria-hidden="true">
-              <svg
-                viewBox="0 0 34 30"
-                fill="none"
-                className="h-[24px] w-[27px] md:h-[30px] md:w-[34px]"
-              >
-                <path d={STAR_1_D} fill="#643F80" />
-              </svg>
-              <svg
-                viewBox="0 0 11 9"
-                fill="none"
-                className="absolute left-[18px] top-[1px] h-[9px] w-[11px] transition-transform duration-700 ease-in-out group-hover:rotate-[360deg] md:left-[23px]"
-              >
-                <path d={STAR_2_D} fill="#643F80" />
-              </svg>
-            </span>
-            <p className="flex-1 text-center font-display text-[14px] italic leading-snug text-[#44394c] md:text-base">
-              If None Of That Sounds Like You, You&rsquo;re Exactly Who We Build
-              For.
-            </p>
-            <svg
-              viewBox="0 0 28 28"
-              fill="none"
-              aria-hidden="true"
-              className="h-7 w-7 shrink-0 transition-transform duration-300 group-hover:rotate-45"
+          <div className="mx-auto mt-10 md:mt-[60px] max-w-[760px]">
+            <div className="mx-auto max-w-[675px] space-y-6 md:space-y-[71px]">
+              {ITEMS.map((t) => (
+                <TicketRow key={t} text={t} />
+              ))}
+            </div>
+
+            {/* Closing pill */}
+            <a
+              href="#contact"
+              className="nf-pill group mx-auto mt-10 md:mt-[60px] flex max-w-[620px] items-center gap-3 rounded-[10px] bg-[#e3c6f9] py-2.5 px-4 md:h-[49px] md:gap-2 md:py-0 md:px-[14px]"
             >
-              <g clipPath="url(#notfor-pill-arrow)">
-                <path d={PILL_ARROW_D} fill="#643F80" />
-              </g>
-              <defs>
-                <clipPath id="notfor-pill-arrow">
-                  <rect
-                    width="27.0545"
-                    height="27.0545"
-                    fill="white"
-                    transform="translate(0 27.0547) rotate(-90)"
-                  />
-                </clipPath>
-              </defs>
-            </svg>
-          </a>
+              <span className="relative shrink-0" aria-hidden="true">
+                <svg
+                  viewBox="0 0 34 30"
+                  fill="none"
+                  className="h-[24px] w-[27px] md:h-[30px] md:w-[34px]"
+                >
+                  <path d={STAR_1_D} fill="#643F80" />
+                </svg>
+                <svg
+                  viewBox="0 0 11 9"
+                  fill="none"
+                  className="absolute left-[18px] top-[1px] h-[9px] w-[11px] transition-transform duration-700 ease-in-out group-hover:rotate-[360deg] md:left-[23px]"
+                >
+                  <path d={STAR_2_D} fill="#643F80" />
+                </svg>
+              </span>
+              <p className="flex-1 text-center font-display text-[14px] italic leading-snug text-[#44394c] md:text-base">
+                If None Of That Sounds Like You, You&rsquo;re Exactly Who We Build
+                For.
+              </p>
+              <svg
+                viewBox="0 0 28 28"
+                fill="none"
+                aria-hidden="true"
+                className="h-7 w-7 shrink-0 transition-transform duration-300 group-hover:rotate-45"
+              >
+                <g clipPath="url(#notfor-pill-arrow)">
+                  <path d={PILL_ARROW_D} fill="#643F80" />
+                </g>
+                <defs>
+                  <clipPath id="notfor-pill-arrow">
+                    <rect
+                      width="27.0545"
+                      height="27.0545"
+                      fill="white"
+                      transform="translate(0 27.0547) rotate(-90)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+          </div>
         </div>
-      </div>
-    </Section>
+      </Section>
+    </div>
   );
 }

@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /* ------------------------------------------------------------------
    PROOF VAULT — infinite-loop work carousel.
@@ -106,6 +111,46 @@ function Arrow({ dir, onClick, label }) {
 export default function ProofVault() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const root = useRef(null);
+
+  /* Vault-opening entrance: heading fade-up, phir stage parde ki tarah khulega */
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      const q = gsap.utils.selector(root);
+
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+      });
+
+      tl.fromTo(
+        q(".pv-heading"),
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        0
+      );
+
+      tl.fromTo(
+        q(".pv-stage"),
+        {
+          clipPath: "inset(0% 50% 0% 50%)",
+          opacity: 0,
+          scale: 0.98,
+          transformOrigin: "center",
+        },
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          opacity: 1,
+          scale: 1,
+          duration: 1.3,
+          ease: "power3.inOut",
+        },
+        0.2
+      );
+    },
+    { scope: root }
+  );
+
   const n = WORKS.length;
 
   const go = (dir) => setActive((a) => (a + dir + n) % n);
@@ -118,29 +163,32 @@ export default function ProofVault() {
   }, [paused, n]);
 
   return (
-    /* NOTE: md:pb-[240px] + md:mt-28 intentionally make this section taller on
+    <div ref={root}>
+    {/* NOTE: md:pb-[240px] + md:mt-28 intentionally make this section taller on
        desktop — the page-level watermark logo scales with section height
        (object-contain), so this keeps it the same size as the "Two Kinds of
        Clients" / Journey / NotFor sections. Carousel itself is unchanged.
        md-only because on mobile all sections already share the same
-       fixed-size watermark. */
-    <Section id="proof" tone="transparent" className="bg-transparent px-0 md:pb-[240px]">
+       fixed-size watermark. */}
+    <Section id="proof" tone="transparent" noReveal className="bg-transparent px-0 md:pb-[240px]">
       <div
         className="w-full max-w-[1289px] mx-auto px-4 md:px-0">
-        <SectionHeading
-          badge="The Proof Vault"
-          title={
-            <span className="uppercase font-display">
-              Judge us by the work, not the pitch
-            </span>
-          }
-          align="left"
-          className="w-full"
-        />
+        <div className="pv-heading">
+          <SectionHeading
+            badge="The Proof Vault"
+            title={
+              <span className="uppercase font-display">
+                Judge us by the work, not the pitch
+              </span>
+            }
+            align="left"
+            className="w-full"
+          />
+        </div>
 
         {/* Carousel stage */}
         <div
-          className="relative mt-10 md:mt-28"
+          className="pv-stage relative mt-10 md:mt-28"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -205,5 +253,6 @@ export default function ProofVault() {
         </div>
       </div>
     </Section>
+    </div>
   );
 }
