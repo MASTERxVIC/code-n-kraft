@@ -40,15 +40,15 @@ function ArrowOnDark({ className = "" }) {
   );
 }
 
-export default function ArrowButton({ tone = "light" }) {
+export default function ArrowButton({ tone = "light", className = "" }) {
   return (
-    <span className="absolute -bottom-2 right-4 flex flex-col items-center">
+    <span className="absolute -bottom-2 right-2 lg:right-4 flex flex-col items-center">
       {/* Arrow — lifts a little on hover */}
       <span className="z-10 transition-transform duration-300 ease-out group-hover:-translate-y-2">
         {tone === "dark" ? (
-          <ArrowOnDark className="size-10" />
+          <ArrowOnDark className={className || "size-10"} />
         ) : (
-          <ArrowOnLight className="size-10" />
+          <ArrowOnLight className={className || "size-10"} />
         )}
       </span>
 

@@ -38,14 +38,14 @@ export default function ProblemWeSolve() {
               </p>
             </SectionHeading>
           </Reveal>
-          <div className="relative mt-8 md:mt-12 xl:mt-0 xl:min-h-[578px]">
+          <div className="relative mt-12 md:mb-0 mb-27 xl:mt-0 xl:min-h-[578px]">
             <Reveal
               x={64}
               y={0}
               delay={0.25}
               className="xl:absolute xl:left-[872px] xl:top-[314px]"
             >
-              <Button className="w-[270px] h-[56px]" href="/projects">
+              <Button className="w-[270px] h-[56px] " href="/projects">
                 Make Your Presence
               </Button>
             </Reveal>

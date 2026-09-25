@@ -7,7 +7,7 @@ export default function WatermarkWrapper({ children, className = "" }) {
           renders IDENTICAL in every section. Previously this was w-full h-full
           (scaling with section height), which made tall sections like Welcome
           show a huge watermark and short sections a small one. */}
-      <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none z-0 hidden items-center justify-center overflow-hidden md:flex">
         <div className="relative flex h-[800px] w-[800px] shrink-0 items-center justify-center md:h-[1000px] md:w-[1000px]">
           <Image
             src="/assets/LogoWatermark.svg"

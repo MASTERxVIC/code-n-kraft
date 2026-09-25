@@ -6,12 +6,12 @@ import Image from "next/image";
 import MobileMenu from "./MobileMenu";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/brands", label: "Brands" },
-  { href: "/presence", label: "Presence" },
-  { href: "/services", label: "Services" },
-  { href: "/proof-vault", label: "Proof Vault" },
-  { href: "/projects", label: "Projects" },
+  { href: "#home", label: "Home" },
+  { href: "#Brands", label: "Brands" },
+  { href: "#Presence", label: "Presence" },
+  { href: "#Services", label: "Services" },
+  { href: "#proof", label: "Proof Vault" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 export default function Navbar() {

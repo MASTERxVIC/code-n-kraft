@@ -10,7 +10,7 @@ import ArrowButton from "./ArrowIcon";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 
-function Card({ href = "#", tone = "light", className = "", children }) {
+function Card({ href = "#", tone = "light", className = "", arrowClassName = "", children }) {
   const toneClasses =
     tone === "dark" ? "bg-logo text-on-dark" : "bg-surface text-heading";
 
@@ -20,7 +20,7 @@ function Card({ href = "#", tone = "light", className = "", children }) {
       className={`bento-card group relative flex overflow-hidden rounded-[20px] p-6 transition-all duration-300 ${toneClasses} ${className}`}
     >
       {children}
-      <ArrowButton tone={tone} />
+      <ArrowButton tone={tone} className={arrowClassName} />
     </a>
   );
 }
@@ -101,30 +101,54 @@ function BentoDesktop() {
 
 /* ---------------- Mobile: stacked layout, all cards equal height ---------------- */
 function BentoMobile() {
-  // Single shared size for every card below md
-  const cardCls = "min-h-[200px] items-center justify-center";
-
   return (
     <div className="grid grid-cols-1 gap-4 lg:hidden">
+      {/* Website Designing: chhota card + chhota text + chhota arrow (mobile only) */}
       <Card
         href="/services/website-design"
         tone="dark"
-        className={cardCls}
+        className="min-h-[150px] items-center justify-center"
+        arrowClassName="size-7"
       >
-        <CardTitle className="text-3xl text-button">
+        <CardTitle className="text-2xl text-button">
           Website
           <br />
           Designing
         </CardTitle>
       </Card>
 
-      <Card href="/services/rebrand" className={cardCls}>
-        <CardTitle className="text-2xl">
-          Rebrand &amp;
-          <br />
-          Rebuild
-        </CardTitle>
-      </Card>
+      {/* GEO / SEO / AEO / UI&UX: 2-col square grid — Website Designing aur
+          Rebrand ke beech me */}
+      <div className="grid grid-cols-2 gap-4">
+        <Card
+          href="/services/geo"
+          className="aspect-square items-center justify-center"
+          arrowClassName="size-7"
+        >
+          <CardTitle className="text-xl">GEO</CardTitle>
+        </Card>
+        <Card
+          href="/services/seo"
+          className="aspect-square items-center justify-center"
+          arrowClassName="size-7"
+        >
+          <CardTitle className="text-xl">SEO</CardTitle>
+        </Card>
+        <Card
+          href="/services/aeo"
+          className="aspect-square items-center justify-center"
+          arrowClassName="size-7"
+        >
+          <CardTitle className="text-xl">AEO</CardTitle>
+        </Card>
+        <Card
+          href="/services/ui-ux"
+          className="aspect-square items-center justify-center"
+          arrowClassName="size-7"
+        >
+          <CardTitle className="text-xl">UI &amp; UX</CardTitle>
+        </Card>
+      </div>
 
       <div className="hidden md-block flex items-center justify-center py-2">
         <Image
@@ -136,18 +160,17 @@ function BentoMobile() {
         />
       </div>
 
-      <Card href="/services/geo" className={cardCls}>
-        <CardTitle className="text-2xl">GEO</CardTitle>
-      </Card>
-      <Card href="/services/seo" className={cardCls}>
-        <CardTitle className="text-2xl">SEO</CardTitle>
-      </Card>
-      <Card href="/services/aeo" className={cardCls}>
-        <CardTitle className="text-2xl">AEO</CardTitle>
-      </Card>
-
-      <Card href="/services/ui-ux" className={cardCls}>
-        <CardTitle className="text-2xl">UI &amp; UX</CardTitle>
+      {/* Rebrand: chhota height + chhota text */}
+      <Card
+        href="/services/rebrand"
+        className="min-h-[150px] items-center justify-center"
+        arrowClassName="size-7"
+      >
+        <CardTitle className="text-xl">
+          Rebrand &amp;
+          <br />
+          Rebuild
+        </CardTitle>
       </Card>
     </div>
   );

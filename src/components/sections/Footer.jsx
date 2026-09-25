@@ -8,15 +8,6 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-/* ------------------------------------------------------------------ */
-/*  FOOTER                                                              */
-/*  - Background: bg-footer token (#F3E8FF) — globals.css se             */
-/*  - Center logo (brush circle + CnK ek unit):                         */
-/*    public/assets/FooterLogo.svg (browser path: /assets/...)          */
-/*  - Pixels hero-logo jaisa animate hote hain (grow + twinkle)          */
-/*  - Alignment: Figma ke hisaab se headings + columns center           */
-/* ------------------------------------------------------------------ */
-
 const FOOTER_LOGO = "/assets/FooterLogo.svg";
 
 // FooterLogo.svg (viewBox 0 0 329 374) se nikale hue pixels
@@ -71,9 +62,9 @@ const LEGAL = [
 ];
 
 const labelCls =
-  "font-label text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60";
+  "font-label  text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60";
 const linkCls =
-  "font-serif text-[15px] text-heading/80 transition-colors hover:text-supportive";
+  "font-serif  md:text-[15px] text-[12px] text-heading/80 transition-colors hover:text-supportive";
 
 function SocialIcons() {
   return (
@@ -88,23 +79,6 @@ function SocialIcons() {
         <img src="/assets/Instagram.svg" alt="Instagram" className="h-5 w-5" />
       </a>
     </div>
-  );
-}
-
-function EnvelopeIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-10 6L2 7" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
   );
 }
 
@@ -139,9 +113,7 @@ export default function Footer() {
         }
       );
 
-      // Logo pixels — hero-logo jaisa standalone grow (twinkling stars).
-      // Hero me ye alag tween hai (logo fade ke baad), timeline ke andar nahi —
-      // isliye yahan bhi alag ScrollTrigger tween rakha hai.
+      
       gsap.fromTo(
         q(".footer-pixel"),
         { scale: 0, opacity: 0, transformOrigin: "center" },
@@ -176,14 +148,14 @@ export default function Footer() {
         {/* main grid —
             mobile (2 col): Quick Access | Contact Info / Social Links | Legal
             desktop (3 col): Quick Access | logo | Social Links / Contact Info | logo | Legal */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-12 py-16 md:grid-cols-3 md:gap-x-12 md:gap-y-24 md:py-24">
+        <div className="grid grid-cols-2 gap-x-16 gap-y-16 py-16 md:grid-cols-3 md:gap-x-12 md:gap-y-24 md:py-24">
           {/* row 1, col 1 — quick access */}
           <div
             data-footer="reveal"
-            className="col-start-1 row-start-1 flex flex-col items-start text-left md:col-start-1 md:row-start-1 md:items-center md:text-center"
+            className="col-start-1 row-start-1 flex flex-col items-center text-center md:col-start-1 md:row-start-1 md:items-center md:text-center"
           >
             <p className={labelCls}>Quick Access</p>
-            <ul className="mt-7 flex flex-col items-start gap-5 md:items-center md:gap-7">
+            <ul className="md:mt-7 mt-4 flex flex-col items-center gap-3 md:items-center md:gap-7 ">
               {QUICK_ACCESS.map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className={linkCls}>
@@ -197,23 +169,23 @@ export default function Footer() {
           {/* row 2, col 1 — contact info */}
           <div
             data-footer="reveal"
-            className="col-start-2 row-start-1 flex flex-col items-start text-left md:col-start-1 md:row-start-2 md:items-center md:text-center"
+            className="col-start-2 row-start-1 flex flex-col items-center text-center md:col-start-1 md:row-start-2 md:items-center md:text-center"
           >
             <p className={labelCls}>Contact Info</p>
-            <p className="mt-7 flex items-center justify-start gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
+            <p className="md:mt-7 mt-4 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
               Email
             </p>
             <a
-              href="mailto:katel2k69@gmail.com"
-              className="mt-2 block font-serif text-sm text-heading/80 transition-colors hover:text-supportive"
+              href="mailto:codenkraft@gmail.com"
+              className="mt-2 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
             >
-              katel2k69@gmail.com
+              codenkraft@gmail.com
             </a>
-            <p className="mt-9 flex items-center justify-start gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
+            <p className="mt-9 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
               Phone Number
             </p>
             {/* asli number aane pe yahan daal dena */}
-            <span className="mt-2 block font-serif text-sm text-heading/80">
+            <span className="mt-2 block font-serif text-xs md:text-sm text-heading/80">
               99XXXXXXXX
             </span>
           </div>
@@ -246,10 +218,10 @@ export default function Footer() {
           {/* row 1, col 3 — social links */}
           <div
             data-footer="reveal"
-            className="col-start-1 row-start-2 flex flex-col items-start text-left md:col-start-3 md:row-start-1 md:items-center md:text-center"
+            className="col-start-1 row-start-2 flex flex-col items-center text-center md:col-start-3 md:row-start-1 md:items-center md:text-center"
           >
             <p className={labelCls}>Social Links</p>
-            <div className="mt-7">
+            <div className="md:mt-7 mt-4">
               <SocialIcons />
             </div>
           </div>
@@ -257,10 +229,10 @@ export default function Footer() {
           {/* row 2, col 3 — legal */}
           <div
             data-footer="reveal"
-            className="col-start-2 row-start-2 flex flex-col items-start text-left md:col-start-3 md:row-start-2 md:items-center md:text-center"
+            className="col-start-2 row-start-2 flex flex-col items-center text-center md:col-start-3 md:row-start-2 md:items-center md:text-center"
           >
             <p className={labelCls}>Legal</p>
-            <ul className="mt-7 flex flex-col items-start gap-5 md:items-center md:gap-7">
+            <ul className="md:mt-7 mt-4 flex flex-col items-center gap-2 md:items-center md:gap-7">
               {LEGAL.map((item) => (
                 <li key={item.label}>
                   <Link href={item.href} className={linkCls}>
