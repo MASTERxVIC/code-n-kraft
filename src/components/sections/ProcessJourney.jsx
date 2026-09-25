@@ -147,7 +147,7 @@ export default function ProcessJourney() {
       gsap.set(mp, { strokeDasharray: len, strokeDashoffset: len });
 
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: svg, start: "top 78%", once: true },
+        scrollTrigger: { trigger: svg, start: "top 78%", toggleActions: "play none none none" },
       });
 
       /* Heading pehle */

@@ -87,7 +87,7 @@ export default function NotFor() {
       strips.forEach((el, i) => gsap.set(el, { y: -(i * step) - DROP }));
 
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+        scrollTrigger: { trigger: root.current, start: "top 75%", toggleActions: "play none none none" },
       });
 
       // Heading

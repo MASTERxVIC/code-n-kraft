@@ -75,7 +75,7 @@ export default function Belief() {
       const q = gsap.utils.selector(root);
 
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+        scrollTrigger: { trigger: root.current, start: "top 75%", toggleActions: "play none none none" },
       });
 
       tl.fromTo(

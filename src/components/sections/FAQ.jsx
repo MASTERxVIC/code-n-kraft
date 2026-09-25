@@ -141,7 +141,7 @@ export default function Faq() {
       const items = q(".faq-item");
 
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: root.current, start: "top 75%", once: true },
+        scrollTrigger: { trigger: root.current, start: "top 75%", toggleActions: "play none none none" },
       });
 
       tl.fromTo(

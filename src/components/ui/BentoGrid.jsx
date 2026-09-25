@@ -175,7 +175,7 @@ export default function BentoGrid() {
           scrollTrigger: {
             trigger: root.current,
             start: "top 85%",
-            once: true,
+            toggleActions: "play none none none",
           },
         }
       );

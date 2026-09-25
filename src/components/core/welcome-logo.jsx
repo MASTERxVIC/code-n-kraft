@@ -54,7 +54,7 @@ export function WelcomeLogo() {
           scrollTrigger: {
             trigger: root.current,
             start: "top 88%",
-            once: true,
+            toggleActions: "play none none none",
           },
         }
       );

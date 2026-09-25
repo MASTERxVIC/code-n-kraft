@@ -49,7 +49,7 @@ export default function WorkInfo() {
         scrollTrigger: {
           trigger: root.current,
           start: "top 80%",
-          once: true,
+          toggleActions: "play none none none",
         },
       });
 
