@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import { useLeadForm } from "@/components/ui/LeadFormModal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -50,10 +51,10 @@ const FOOTER_PIXELS = [
 ];
 
 const QUICK_ACCESS = [
-  { label: "Work", href: "/projects" },
-  { label: "Services", href: "/services" },
-  { label: "Process", href: "/process" },
-  { label: "Contact", href: "/contact" },
+  { label: "Work", href: "#proof" },
+  { label: "Services", href: "#Services" },
+  { label: "Process", href: "#process" },
+  { label: "Contact", action: "openLeadForm" },
 ];
 
 const LEGAL = [
@@ -70,13 +71,13 @@ const linkCls =
 function SocialIcons() {
   return (
     <div className="flex flex-row items-center gap-5 md:flex-col md:gap-9">
-      <a href="#" aria-label="LinkedIn" className="transition-transform hover:scale-110">
+      <a href="https://www.linkedin.com/company/code-n-kraft" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-transform hover:scale-110">
         <img src="/assets/LinkedIn.svg" alt="LinkedIn" className="h-5 w-5" />
       </a>
-      <a href="#" aria-label="WhatsApp" className="transition-transform hover:scale-110">
+      <a href="https://wa.me/917505038676" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="transition-transform hover:scale-110">
         <img src="/assets/WhatsApp.svg" alt="WhatsApp" className="h-5 w-5" />
       </a>
-      <a href="#" aria-label="Instagram" className="transition-transform hover:scale-110">
+      <a href="https://www.instagram.com/codenkraft" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:scale-110">
         <img src="/assets/Instagram.svg" alt="Instagram" className="h-5 w-5" />
       </a>
     </div>
@@ -85,6 +86,7 @@ function SocialIcons() {
 
 export default function Footer() {
   const root = useRef(null);
+  const { openLeadForm } = useLeadForm();
 
   useGSAP(
     () => {
@@ -159,9 +161,19 @@ export default function Footer() {
             <ul className="md:mt-7 mt-4 flex flex-col items-center gap-3 md:items-center md:gap-7 ">
               {QUICK_ACCESS.map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className={linkCls}>
-                    {item.label}
-                  </Link>
+                  {item.action === "openLeadForm" ? (
+                    <button
+                      type="button"
+                      onClick={openLeadForm}
+                      className={`${linkCls} cursor-pointer`}
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link href={item.href} className={linkCls}>
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -177,18 +189,11 @@ export default function Footer() {
               Email
             </p>
             <a
-              href="mailto:codenkraft@gmail.com"
+              href="mailto:support@coden Kraft.com"
               className="mt-2 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
             >
-              codenkraft@gmail.com
+              support@codenkraft.com
             </a>
-            <p className="mt-9 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
-              Phone Number
-            </p>
-            {/* asli number aane pe yahan daal dena */}
-            <span className="mt-2 block font-serif text-xs md:text-sm text-heading/80">
-              99XXXXXXXX
-            </span>
           </div>
 
           {/* col 2, rows 1-2 — big logo (brush circle + CnK ek unit) */}

@@ -21,7 +21,9 @@ import Button from "./Button";
    ═══════════════════════════════════════════════════════════════ */
 const FORMSPREE_FORM_ID = "mnpnboop";
 
-/* Your 6 services — user can select multiple */
+/* Service pills — user multiple select kar sakta hai. "Others" isliye hai
+   taaki list me na ho woh requirement bhi capture ho jaye — call pe pata
+   kar lena kya chahiye. */
 const SERVICES = [
   "Website Designing",
   "SEO",
@@ -29,7 +31,19 @@ const SERVICES = [
   "AEO",
   "UI & UX",
   "Rebrand / Rebuild",
+  "Others",
 ];
+
+/* BentoGrid cards ke href → service name. BentoGrid.jsx me kuch badle
+   bina, click interception yahin se pata lagata hai kaunsa card daba. */
+const CARD_HREF_TO_SERVICE = {
+  "/services/website-design": "Website Designing",
+  "/services/rebrand": "Rebrand / Rebuild",
+  "/services/geo": "GEO",
+  "/services/seo": "SEO",
+  "/services/aeo": "AEO",
+  "/services/ui-ux": "UI & UX",
+};
 
 const LeadFormContext = createContext(null);
 
@@ -42,11 +56,42 @@ export function useLeadForm() {
 
 export function LeadFormProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false);
-  const openLeadForm = useCallback(() => setIsOpen(true), []);
+  const [presetService, setPresetService] = useState(null);
+
+  /* openLeadForm(service?) — optional preset: jis service card pe click
+     hua ho, woh pill pehle se selected khulegi */
+  const openLeadForm = useCallback((service) => {
+    /* sirf string preset bano — generic onClick={openLeadForm} se aaya
+       click event yahan service na ban jaye */
+    setPresetService(typeof service === "string" ? service : null);
+    setIsOpen(true);
+  }, []);
   const closeLeadForm = useCallback(() => setIsOpen(false), []);
 
+  /* Service card clicks — BentoGrid.jsx ko BILKUL haath lagaye bina.
+     Cards abhi bhi <a href="/services/..."> hain; yeh document-level
+     listener un clicks ko pakad ke dead link pe jaane ke bajaye
+     form kholta hai (clicked service pre-selected). */
+  useEffect(() => {
+    const onClick = (e) => {
+      // sirf plain left-click; ctrl/middle-click waghera ko chhodo
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey)
+        return;
+      const card = e.target?.closest?.("a.bento-card");
+      if (!card) return;
+      const service = CARD_HREF_TO_SERVICE[card.getAttribute("href")];
+      if (!service) return;
+      e.preventDefault();
+      openLeadForm(service);
+    };
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [openLeadForm]);
+
   return (
-    <LeadFormContext.Provider value={{ isOpen, openLeadForm, closeLeadForm }}>
+    <LeadFormContext.Provider
+      value={{ isOpen, openLeadForm, closeLeadForm, presetService }}
+    >
       {children}
       <LeadFormModal />
     </LeadFormContext.Provider>
@@ -60,7 +105,7 @@ const labelCls =
   "mb-1.5 block font-body text-sm font-medium text-heading";
 
 function LeadFormModal() {
-  const { isOpen, closeLeadForm } = useLeadForm();
+  const { isOpen, closeLeadForm, presetService } = useLeadForm();
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -78,6 +123,8 @@ function LeadFormModal() {
 
   useEffect(() => {
     if (!isOpen) return;
+    /* Card se aaya preset — woh service pehle se selected khulegi */
+    setServices(presetService ? [presetService] : []);
     const raf = requestAnimationFrame(() => setShow(true));
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -91,7 +138,7 @@ function LeadFormModal() {
       document.body.style.overflow = prevOverflow;
       document.removeEventListener("keydown", onKey);
     };
-  }, [isOpen, handleClose]);
+  }, [isOpen, handleClose, presetService]);
 
   /* Reset on close — form opens fresh next time */
   useEffect(() => {

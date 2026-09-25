@@ -113,7 +113,7 @@ export default function CookiePolicyPage() {
       <LegalSection id="contact" n={6} title="Contact us">
         <p>Questions about our use of cookies? Reach us at:</p>
         <ul className={listCls}>
-          <li>Email: <a className={linkCls} href="mailto:codenkraft@gmail.com">codenkraft@gmail.com</a></li>
+          <li>Email: <a className={linkCls} href="mailto:support@codenkraft.com">support@codenkraft.com</a></li>
           <li>Instagram: <a className={linkCls} href="https://www.instagram.com/codenkraft">@codenkraft</a></li>
         </ul>
         <p>

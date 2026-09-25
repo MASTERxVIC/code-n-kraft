@@ -48,7 +48,7 @@ export default function PrivacyPolicyPage() {
         <ul className={listCls}>
           <li>Website: <a className={linkCls} href="https://codenkraft.com">codenkraft.com</a></li>
           <li>Instagram: <a className={linkCls} href="https://www.instagram.com/codenkraft">@codenkraft</a></li>
-          <li>Email: <a className={linkCls} href="mailto:codenkraft@gmail.com">codenkraft@gmail.com</a></li>
+          <li>Email: <a className={linkCls} href="mailto:support@codenkraft.com">support@codenkraft.com</a></li>
         </ul>
         <p>
           For the purposes of the Digital Personal Data Protection Act, 2023
@@ -105,7 +105,7 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           You may withdraw your consent at any time by writing to{" "}
-          <a className={linkCls} href="mailto:codenkraft@gmail.com">codenkraft@gmail.com</a>.
+          <a className={linkCls} href="mailto:support@codenkraft.com">support@codenkraft.com</a>.
           Withdrawal does not affect the lawfulness of processing carried out
           before the withdrawal. If you share another person&apos;s details with
           us, please make sure you have their permission to do so.
@@ -170,7 +170,7 @@ export default function PrivacyPolicyPage() {
         </ul>
         <p>
           To exercise any of these rights, email us at{" "}
-          <a className={linkCls} href="mailto:codenkraft@gmail.com">codenkraft@gmail.com</a>{" "}
+          <a className={linkCls} href="mailto:support@codenkraft.com">support@codenkraft.com</a>{" "}
           with the subject line &quot;Data Request&quot;. We will verify your
           identity before acting, to protect your data from unauthorised access.
         </p>
@@ -180,7 +180,7 @@ export default function PrivacyPolicyPage() {
         <p>
           If you have any complaint about how we handle your personal data,
           write to us at{" "}
-          <a className={linkCls} href="mailto:codenkraft@gmail.com">codenkraft@gmail.com</a>{" "}
+          <a className={linkCls} href="mailto:support@codenkraft.com">support@codenkraft.com</a>{" "}
           with the subject line &quot;Privacy Grievance&quot;. We aim to
           acknowledge your complaint promptly and resolve it within 30 days.
         </p>
@@ -246,7 +246,7 @@ export default function PrivacyPolicyPage() {
           reach us at:
         </p>
         <ul className={listCls}>
-          <li>Email: <a className={linkCls} href="mailto:codenkraft@gmail.com">codenkraft@gmail.com</a></li>
+          <li>Email: <a className={linkCls} href="mailto:support@codenkraft.com">support@codenkraft.com</a></li>
           <li>Instagram: <a className={linkCls} href="https://www.instagram.com/codenkraft">@codenkraft</a></li>
         </ul>
       </LegalSection>
