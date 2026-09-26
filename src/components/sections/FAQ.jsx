@@ -3,10 +3,10 @@
 import { useState, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 const QUESTIONS = [
   {
@@ -123,8 +123,9 @@ export default function Faq() {
   const root = useRef(null);
 
   /* Odd items (1st, 3rd, 5th) left se aayenge, even items (2nd, 4th)
-     right se — alternate wahi direction follow karega. */
-  useGSAP(
+     right se — alternate wahi direction follow karega.
+     ScrollTrigger setup viewport ke paas aane par (useDeferredGsap) */
+  useDeferredGsap(root,
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const q = gsap.utils.selector(root);
@@ -149,8 +150,7 @@ export default function Faq() {
           0.15 + i * 0.12
         );
       });
-    },
-    { scope: root }
+    }
   );
 
   /* FAQPage JSON-LD — Google rich results + AI engines ke liye */
@@ -182,7 +182,7 @@ export default function Faq() {
       <div ref={root}>
       <div className="mx-auto w-full max-w-[1289px] px-4 pb-24 md:px-0 md:pb-[120px]">
         <div className="faq-heading">
-          <p className="text-center text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60">
+          <p className="text-center text-[11px] font-medium uppercase tracking-[0.22em] text-heading/85">
             Before You Sign On
           </p>
           <h2 className="mt-3 text-center font-display text-lg font-bold leading-tight text-heading md:text-[40px]">

@@ -21,7 +21,7 @@ export default function SectionHeading({
       {badge && (
         <span
           className={`mb-2 font-label text-[0.6875rem] uppercase tracking-[0.1em] ${
-            dark ? "text-button" : "text-heading/70"
+            dark ? "text-button" : "text-heading/85"
           }`}
         >
           {badge}

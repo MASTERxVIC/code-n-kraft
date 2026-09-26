@@ -145,7 +145,8 @@ export function HeroLogo() {
           aria-hidden="true"
           width={600}
           height={583}
-          priority
+          fetchPriority="high"
+          loading="eager"
           className="h-full w-full"
         />
         {/* Pixels — SVG se nikaal ke yahan (wave animation ke liye) */}

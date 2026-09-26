@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { useLeadForm } from "@/components/ui/LeadFormModal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 const ITEMS = [
   "You Want A Website \u201cBy Tomorrow\u201d \u2013 We Don\u2019t Rush Craftsmanship",
@@ -78,7 +78,9 @@ export default function NotFor() {
      phir bacha hua bundle ek-ek slot neeche sarakta jayega — har level pe
      ek strip apne ghar pe reh jayegi. Slot ka faasla runtime pe naapa
      jata hai (space-y gaps), hardcode nahi. */
-  useGSAP(
+  /* ScrollTrigger setup + step measurement viewport ke paas aane par —
+     layout tab tak same rehta hai, isliye measured step identical */
+  useDeferredGsap(root,
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const q = gsap.utils.selector(root);
@@ -122,8 +124,7 @@ export default function NotFor() {
         { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
         "-=0.25"
       );
-    },
-    { scope: root }
+    }
   );
 
   return (

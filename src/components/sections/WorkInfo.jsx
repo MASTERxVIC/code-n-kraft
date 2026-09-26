@@ -4,11 +4,11 @@ import { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 /* Duotone filter: maps image darks → #150521, lights → white */
 function DuotoneFilter() {
@@ -40,7 +40,8 @@ const duotoneCls = "h-auto w-44 md:w-56 [filter:url(#duotone-plum)]";
 export default function WorkInfo() {
   const root = useRef(null);
 
-  useGSAP(
+  /* ScrollTrigger setup viewport ke paas aane par (useDeferredGsap) */
+  useDeferredGsap(root,
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const q = gsap.utils.selector(root);
@@ -80,8 +81,7 @@ export default function WorkInfo() {
         },
         0.3
       );
-    },
-    { scope: root }
+    }
   );
 
   return (

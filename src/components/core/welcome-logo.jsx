@@ -3,10 +3,10 @@
 import { useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 const WELCOME_PIXELS = [
   "M810.08 103.509H803.467V110.125H810.08V103.509Z",
@@ -34,7 +34,8 @@ const WELCOME_PIXELS = [
 export function WelcomeLogo() {
   const root = useRef(null);
 
-  useGSAP(
+  /* Pixels grow — ScrollTrigger setup viewport ke paas aane par (useDeferredGsap) */
+  useDeferredGsap(root,
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const q = gsap.utils.selector(root);
@@ -58,8 +59,7 @@ export function WelcomeLogo() {
           },
         }
       );
-    },
-    { scope: root }
+    }
   );
 
   return (

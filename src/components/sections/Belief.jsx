@@ -3,12 +3,12 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 import Button from "../ui/Button";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 
 
@@ -60,8 +60,9 @@ function CrossIcon() {
 export default function Belief() {
   const root = useRef(null);
 
-  /* Heading + paragraphs reveal, Agreed left se, Not Agreed right se */
-  useGSAP(
+  /* Heading + paragraphs reveal, Agreed left se, Not Agreed right se —
+     ScrollTrigger setup viewport ke paas aane par (useDeferredGsap) */
+  useDeferredGsap(root,
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const q = gsap.utils.selector(root);
@@ -97,8 +98,7 @@ export default function Belief() {
         { x: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
         0.45
       );
-    },
-    { scope: root }
+    }
   );
 
   return (

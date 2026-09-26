@@ -4,6 +4,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -28,33 +29,46 @@ export function Reveal({
 }) {
   const ref = useRef(null);
 
+  const build = (withTrigger) => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const vars = {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      duration,
+      delay,
+      ease: "power3.out",
+    };
+    if (withTrigger) {
+      vars.scrollTrigger = {
+        trigger: el,
+        start,
+        toggleActions: "play none none none",
+      };
+    }
+    gsap.fromTo(el, { opacity: 0, x, y }, vars);
+  };
+
+  /* Hero (scroll=false): load pe turant — pehle jaisa, koi defer nahi */
   useGSAP(
     () => {
-      const el = ref.current;
-      if (!el) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const vars = {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        duration,
-        delay,
-        ease: "power3.out",
-      };
-      if (scroll) {
-        vars.scrollTrigger = {
-          trigger: el,
-          start,
-          toggleActions: "play none none none",
-        };
-      }
-      gsap.fromTo(el, { opacity: 0, x, y }, vars);
+      if (scroll) return;
+      build(false);
     },
     // NOTE: scope nahi dete — callback me ref.current (element) direct use hota hai,
     // string selector nahi. scope: ref dene se render-time pe ref.current null hota hai
     // aur GSAP "Invalid scope" warnings spam karta hai.
     { dependencies: [x, y, delay, duration, start, scroll] }
   );
+
+  /* scroll=true: ScrollTrigger setup tabhi hoga jab element viewport ke
+     600px ke andar aaye — page load pe 8 triggers ek saath nahi bante */
+  useDeferredGsap(ref, () => {
+    if (!scroll) return;
+    build(true);
+  });
 
   return (
     <Tag ref={ref} className={className}>

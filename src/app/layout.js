@@ -102,7 +102,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll>
           <LeadFormProvider>
             <Navbar />
-            {children}
+            <main>{children}</main>
           </LeadFormProvider>
         </SmoothScroll>
       </body>

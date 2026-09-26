@@ -46,24 +46,31 @@ export function TextScramble({
       const maxLen = Math.max(from.length, to.length);
 
       cancelAnimationFrame(rafRef.current);
+      // Throttle: React setOutput max har ~50ms (20fps) — scramble visually
+      // identical, re-renders ~3x kam. rAF loop har frame chalta rehta hai
+      // taaki `progress` ka timing exact rahe; sirf paint gate hota hai.
+      let lastPaint = 0;
       const frame = (now) => {
         const progress = Math.min((now - start) / duration, 1);
-        const revealed = Math.floor(progress * maxLen);
-        let out = "";
-        for (let i = 0; i < maxLen; i++) {
-          if (i < revealed) {
-            out += to[i] ?? "";
-          } else {
-            out += GLYPHS[(Math.random() * GLYPHS.length) | 0];
-          }
-        }
         if (progress >= 1) {
           setOutput(to);
           currentRef.current = to;
-        } else {
-          setOutput(out);
-          rafRef.current = requestAnimationFrame(frame);
+          return;
         }
+        if (now - lastPaint >= 50) {
+          lastPaint = now;
+          const revealed = Math.floor(progress * maxLen);
+          let out = "";
+          for (let i = 0; i < maxLen; i++) {
+            if (i < revealed) {
+              out += to[i] ?? "";
+            } else {
+              out += GLYPHS[(Math.random() * GLYPHS.length) | 0];
+            }
+          }
+          setOutput(out);
+        }
+        rafRef.current = requestAnimationFrame(frame);
       };
       rafRef.current = requestAnimationFrame(frame);
     };

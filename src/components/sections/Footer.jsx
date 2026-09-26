@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useLeadForm } from "@/components/ui/LeadFormModal";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,7 +64,7 @@ const LEGAL = [
 ];
 
 const labelCls =
-  "font-label  text-[11px] font-medium uppercase tracking-[0.22em] text-heading/60";
+  "font-label  text-[11px] font-medium uppercase tracking-[0.22em] text-heading/80";
 const linkCls =
   "font-serif  md:text-[15px] text-[12px] text-heading/80 transition-colors hover:text-supportive";
 
@@ -88,7 +88,10 @@ export default function Footer() {
   const root = useRef(null);
   const { openLeadForm } = useLeadForm();
 
-  useGSAP(
+  /* Footer reveal + pixels — ScrollTrigger setup viewport ke paas aane par
+     (useDeferredGsap). Navbar ka hide-on-footer sirf <footer> DOM pe depend
+     karta hai, jo hum delay nahi karte — sirf animation setup defer hota hai */
+  useDeferredGsap(root,
     () => {
       const el = root.current;
       if (!el) return;
@@ -133,8 +136,7 @@ export default function Footer() {
           },
         }
       );
-    },
-    { dependencies: [] }
+    }
   );
 
   return (
@@ -143,7 +145,7 @@ export default function Footer() {
         {/* tagline */}
         <p
           data-footer="reveal"
-          className="pt-14 text-center font-label text-[11px] text-heading/70 md:pt-20"
+          className="pt-14 text-center font-label text-[11px] text-heading/85 md:pt-20"
         >
           Ink, Kraft, And Code — Same Care Every Time
         </p>
@@ -185,7 +187,7 @@ export default function Footer() {
             className="col-start-2 row-start-1 flex flex-col items-center text-center md:col-start-1 md:row-start-2 md:items-center md:text-center"
           >
             <p className={labelCls}>Contact Info</p>
-            <p className="md:mt-7 mt-4 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/50 md:justify-center">
+            <p className="md:mt-7 mt-4 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/80 md:justify-center">
               Email
             </p>
             <a
@@ -205,7 +207,9 @@ export default function Footer() {
               <img
                 src={FOOTER_LOGO}
                 alt="Code N Kraft"
-                className="w-full"
+                width={329}
+                height={374}
+                className="h-auto w-full"
               />
               {/* Pixels — SVG se nikaal ke yahan (hero-logo jaisa grow) */}
               <svg
@@ -253,7 +257,7 @@ export default function Footer() {
         {/* copyright */}
         <p
           data-footer="reveal"
-          className="pb-8 pt-14 text-center font-body text-xs text-heading/60  md:pt-0"
+          className="pb-8 pt-14 text-center font-body text-xs text-heading/80  md:pt-0"
         >
           &copy; 2026 Code N Kraft. All Rights Reserved.
         </p>

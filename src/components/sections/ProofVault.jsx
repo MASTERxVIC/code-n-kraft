@@ -3,11 +3,11 @@
 import { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 /* ------------------------------------------------------------------
    PROOF VAULT — infinite-loop work carousel.
@@ -113,8 +113,9 @@ export default function ProofVault() {
   const [paused, setPaused] = useState(false);
   const root = useRef(null);
 
-  /* Vault-opening entrance: heading fade-up, phir stage parde ki tarah khulega */
-  useGSAP(
+  /* Vault-opening entrance: heading fade-up, phir stage parde ki tarah khulega.
+     ScrollTrigger setup viewport ke paas aane par (useDeferredGsap) */
+  useDeferredGsap(root,
     () => {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       const q = gsap.utils.selector(root);
@@ -147,8 +148,7 @@ export default function ProofVault() {
         },
         0.2
       );
-    },
-    { scope: root }
+    }
   );
 
   const n = WORKS.length;

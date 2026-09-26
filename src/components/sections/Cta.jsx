@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 import Button from "../ui/Button";
 import { useLeadForm } from "../ui/LeadFormModal";
@@ -14,7 +14,8 @@ export default function Cta() {
   const root = useRef(null);
   const { openLeadForm } = useLeadForm();
 
-  useGSAP(
+  /* ScrollTrigger setup viewport ke paas aane par (useDeferredGsap) */
+  useDeferredGsap(root,
     () => {
       const el = root.current;
       if (!el) return;
@@ -46,8 +47,7 @@ export default function Cta() {
           { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.7)" },
           "-=0.4"
         );
-    },
-    { dependencies: [] }
+    }
   );
 
   return (
@@ -66,7 +66,7 @@ export default function Cta() {
 
           <p
             data-cta="para"
-            className="mx-auto mt-6 max-w-[640px] text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-heading/60 md:text-xs"
+            className="mx-auto mt-6 max-w-[640px] text-xs font-medium uppercase leading-relaxed tracking-[0.18em] text-heading/85 md:text-xs"
           >
             Whether it&rsquo;s your first site or your fifth rebrand, we bring
             the same standard to every project.

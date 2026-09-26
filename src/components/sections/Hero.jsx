@@ -31,8 +31,8 @@ export default function Hero() {
             id="hero-cnk-letter"
             src="/assets/CNKletter.svg"
             alt=""
-            width={300}
-            height={140}
+            width={347}
+            height={136}
             className="mx-auto md:mx-0 xl:my-[66px] md:my-[60px] my-[120px] h-auto xl:w-[300px] md:w-[200px] w-[300px]"
           />
         </Reveal>

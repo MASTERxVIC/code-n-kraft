@@ -3,11 +3,11 @@
 import { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { useDeferredGsap } from "@/hooks/use-deferred-gsap";
 import Section from "../ui/Section";
 import SectionHeading from "../ui/SectionHeading";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
 /* Exact path exported from Figma (Vector_1) */
 const JOURNEY_PATH =
@@ -114,7 +114,9 @@ export default function ProcessJourney() {
   const root = useRef(null);
   const maskPath = useRef(null);
 
-  useGSAP(
+  /* ScrollTrigger + path-draw setup viewport ke paas aane par (useDeferredGsap).
+     Neeche ke precomputed values static JOURNEY_PATH se nikle hain. */
+  useDeferredGsap(root,
     () => {
       const svg = root.current?.querySelector("svg");
       const mp = maskPath.current;
@@ -122,24 +124,14 @@ export default function ProcessJourney() {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const q = gsap.utils.selector(root);
-      const len = mp.getTotalLength();
 
-      /* Path ke kis fraction par node ka center hai — sampling se nikaalo */
-      const fractionAt = (cx, cy) => {
-        let best = 0;
-        let bestD = Infinity;
-        const N = 500;
-        for (let i = 0; i <= N; i++) {
-          const p = mp.getPointAtLength((len * i) / N);
-          const d = (p.x - cx) ** 2 + (p.y - cy) ** 2;
-          if (d < bestD) {
-            bestD = d;
-            best = i / N;
-          }
-        }
-        return best;
-      };
-      const fracs = STEPS.map((s) => fractionAt(s.cx, s.cy));
+      /* Path ke kis fraction par node ka center hai — ye values static
+         JOURNEY_PATH se precompute ki gayi hain (wahi N=500 nearest-sample
+         search jo runtime loop karta tha; results byte-identical verify kiye
+         gaye). Isse 3006 synchronous getPointAtLength calls page load se
+         khatam ho jaate hain — animation bilkul same rehti hai. */
+      const len = 1693.313857346818; // mp.getTotalLength() ka precomputed value
+      const fracs = [0, 0.174, 0.358, 0.584, 0.756, 0.984]; // STEPS order me
 
       const DRAW = 4; // path draw duration (sec) — constant speed = path pe chalne jaisa
 
@@ -184,8 +176,7 @@ export default function ProcessJourney() {
         { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" },
         0.25 + DRAW - 0.4
       );
-    },
-    { scope: root }
+    }
   );
 
   return (
@@ -299,7 +290,7 @@ export default function ProcessJourney() {
 
             {/* Footnote */}
             <p
-              className="pj-note mt-2 text-right font-body text-[11px] font-semibold uppercase leading-relaxed tracking-[0.15em] text-heading/50"
+              className="pj-note mt-2 text-right font-body text-[11px] font-semibold uppercase leading-relaxed tracking-[0.15em] text-heading/80"
             >
               This takes longer than most agencies.
               <br />
