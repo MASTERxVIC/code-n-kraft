@@ -3,9 +3,9 @@ import Image from "next/image";
 import { Reveal } from "@/components/core/reveal";
 
 const defaultLogos = [
-  { id: 1, src: "/assets/logoipsum1.svg", alt: "Logoipsum 1" },
-  { id: 2, src: "/assets/logoipsum2.svg", alt: "Logoipsum 2" },
-  { id: 3, src: "/assets/logoipsum3.svg", alt: "Logoipsum 3" },
+  { id: 1, src: "/assets/brands/avqube.png", alt: "AVQUBE" },
+  { id: 2, src: "/assets/brands/streamie.png", alt: "Streamie" },
+  { id: 3, src: "/assets/brands/globerix.png", alt: "Globerix" },
   { id: 4, src: "/assets/logoipsum4.svg", alt: "Logoipsum 4" },
 ];
 
