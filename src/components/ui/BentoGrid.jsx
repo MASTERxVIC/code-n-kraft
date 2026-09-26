@@ -216,7 +216,7 @@ export default function BentoGrid() {
       <BentoMobile />
 
       {/* Logo mark — floats centered between the rows (desktop only) */}
-      <div className="hidden md:block pointer-events-none absolute xl:left-[630px] xl:top-[300px] lg:left-[460px] lg:top-[300px] z-10 -translate-x-1/2 -translate-y-1/2 ">
+      <div className="hidden md:block pointer-events-none absolute xl:left-1/2 xl:top-[300px] lg:left-1/2 lg:top-[300px] z-10 -translate-x-1/2 -translate-y-1/2 ">
         <Image src="/assets/ServiceLogo.svg" alt="" width={88} height={88} />
       </div>
     </section>

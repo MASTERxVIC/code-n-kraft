@@ -67,3 +67,15 @@ h6 {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- 5. Hero Enso logo: 1440px+ pe original 600px size ----------
+   (Tailwind v4 me min-[1440px]: variant xl: se PEHLE sort hota hai,
+   isliye class-based approach kaam nahi karta — ye unlayered rule
+   utilities layer se hamesha jeet ta hai.) */
+@media (min-width: 1440px) {
+  #hero-enso-logo {
+    width: 600px;
+    height: 583px;
+    right: 75px;
+  }
+}

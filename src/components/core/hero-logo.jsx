@@ -136,7 +136,7 @@ export function HeroLogo() {
     <div
       ref={root}
       id="hero-enso-logo"
-      className="z-30 pointer-events-none absolute xl:right-[75px] lg:right-[15px] right-0 top-[90px] lg:opacity-100 md:opacity-20 opacity-5 max-w-none xl:w-[600px] xl:h-[583px] lg:w-[500px] lg:h-[383px] md:w-[480px] md:h-[383px]"
+      className="z-30 pointer-events-none absolute xl:right-[40px] 2xl:right-[75px] lg:right-[15px] right-0 top-[90px] lg:opacity-100 md:opacity-20 opacity-5 max-w-none xl:w-[500px] 2xl:w-[600px] xl:h-[486px] 2xl:h-[583px] lg:w-[440px] lg:h-[337px] md:w-[480px] md:h-[383px]"
     >
       <div className="hero-logo-inner relative h-full w-full">
         <Image
