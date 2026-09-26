@@ -16,46 +16,34 @@ gsap.registerPlugin(ScrollTrigger);
 ------------------------------------------------------------------ */
 const WORKS = [
   {
-    brand: "Brew & Bean",
-    tag: "Café chain · Website + Local SEO",
+    brand: "AVQUBE",
+    tag: "Audio-visual solutions · Website",
     summary:
-      "Full website rebuild with local SEO. Three outlets hit #1 for 'coffee near me' within 90 days.",
-    img: "https://picsum.photos/seed/cnk-brew/600/800",
+      "Complete website for AVQUBE's AV product range — PTZ cameras, video processing, audio solutions, AV over IP and control systems.",
+    img: "/assets/work/avqube-site.png",
+    url: "https://avqube.com/",
   },
   {
-    brand: "Nordwind Legal",
-    tag: "Law firm · Website + AEO",
-    summary:
-      "Answer-engine-ready practice site. Featured snippets now drive 40% of their consultation calls.",
-    img: "https://picsum.photos/seed/cnk-legal/600/800",
+    brand: "Streamifie",
+    tag: "Streaming hardware · Website",
+    summary: "Product website for Streamifie's 4K streaming hardware.",
+    img: "/assets/work/streamifie-site.png",
+    url: "https://streamifie.com/",
   },
   {
-    brand: "Velvetine Salon",
-    tag: "Salon · Rebrand + Website",
-    summary:
-      "Rebrand and booking-first website. Online appointments doubled in the first quarter.",
-    img: "https://picsum.photos/seed/cnk-salon/600/800",
+    brand: "Globerix",
+    tag: "Website",
+    summary: "Website designed and built for Globerix by Code n Kraft.",
+    img: "/assets/work/globerix-site.png",
+    url: "https://globerix.in/",
   },
   {
-    brand: "Atlas Fitness",
-    tag: "Gym · Website + GEO",
+    brand: "Collabus",
+    tag: "Team workspace & task manager · Web app",
     summary:
-      "GEO-optimized site built to surface in AI answers. Trial signups up 3x after launch.",
-    img: "https://picsum.photos/seed/cnk-atlas/600/800",
-  },
-  {
-    brand: "Maison Olive",
-    tag: "Restaurant · Website + SEO",
-    summary:
-      "Menu-first website with reservation flow. Organic covers grew 65% in six months.",
-    img: "https://picsum.photos/seed/cnk-olive/600/800",
-  },
-  {
-    brand: "Pixel & Thread",
-    tag: "Boutique · E-commerce + SEO",
-    summary:
-      "Store rebuild tuned for speed and search. Page-one rankings for 12 product keywords.",
-    img: "https://picsum.photos/seed/cnk-pixel/600/800",
+      "Team Workspace & Task Manager web app — designed and built by Code n Kraft.",
+    img: "/assets/work/collabus-site.png",
+    url: "https://collabus-nine-nu.vercel.app/",
   },
 ];
 
@@ -197,11 +185,19 @@ export default function ProofVault() {
               let off = (i - active + n) % n;
               if (off > n / 2) off -= n;
               const isCenter = off === 0;
+              const CardEl = isCenter && w.url ? "a" : "div";
 
               return (
                 <div key={w.brand} className={cardStyle(off)} aria-hidden={!isCenter}>
-                  <div
-                    className={`group relative w-[240px] md:w-[300px] aspect-[3/4] overflow-hidden rounded-[48px] shadow-2xl ${
+                  <CardEl
+                    {...(isCenter && w.url
+                      ? {
+                          href: w.url,
+                          target: "_blank",
+                          rel: "noopener noreferrer",
+                        }
+                      : {})}
+                    className={`group relative block w-[240px] md:w-[300px] aspect-[3/4] overflow-hidden rounded-[48px] shadow-2xl ${
                       isCenter ? "cursor-pointer" : ""
                     }`}
                   >
@@ -223,7 +219,7 @@ export default function ProofVault() {
                         </p>
                       </div>
                     )}
-                  </div>
+                  </CardEl>
 
                   {/* Brand name under the card */}
                   <p
