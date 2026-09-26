@@ -69,6 +69,7 @@ const jsonLd = {
       "@id": `${SITE_URL}/#business`,
       name: "Code 'n' Kraft",
       url: SITE_URL,
+      image: `${SITE_URL}/assets/NavLogo.svg`,
       description:
         "Website design, development and search-visibility studio — SEO, AEO and GEO.",
       areaServed: "IN",
