@@ -151,7 +151,7 @@ export default function Footer() {
         </p>
 
         {/* main grid —
-            mobile (2 col): Quick Access | Contact Info / Social Links | Legal
+            mobile (2 col): Quick Access | Social Links / Contact Info | Legal
             desktop (3 col): Quick Access | logo | Social Links / Contact Info | logo | Legal */}
         <div className="grid grid-cols-2 gap-x-16 gap-y-16 py-16 md:grid-cols-3 md:gap-x-12 md:gap-y-24 md:py-24">
           {/* row 1, col 1 — quick access */}
@@ -184,7 +184,7 @@ export default function Footer() {
           {/* row 2, col 1 — contact info */}
           <div
             data-footer="reveal"
-            className="col-start-2 row-start-1 flex flex-col items-center text-center md:col-start-1 md:row-start-2 md:items-center md:text-center"
+            className="col-start-1 row-start-2 flex flex-col items-center text-center md:col-start-1 md:row-start-2 md:items-center md:text-center"
           >
             <p className={labelCls}>Contact Info</p>
             <p className="md:mt-7 mt-4 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/80 md:justify-center">
@@ -228,7 +228,7 @@ export default function Footer() {
           {/* row 1, col 3 — social links */}
           <div
             data-footer="reveal"
-            className="col-start-1 row-start-2 flex flex-col items-center text-center md:col-start-3 md:row-start-1 md:items-center md:text-center"
+            className="col-start-2 row-start-1 flex flex-col items-center text-center md:col-start-3 md:row-start-1 md:items-center md:text-center"
           >
             <p className={labelCls}>Social Links</p>
             <div className="md:mt-7 mt-4">

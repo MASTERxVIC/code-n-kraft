@@ -132,10 +132,10 @@ export default function Belief() {
 
         <div className="mt-32 flex flex-row items-center justify-center gap-5 sm:flex-row md:mt-80 md:gap-60">
           <div className="bl-agree">
-            <Button icon={<CheckIcon />} width="md:w-[220px] w-[180px] text-sm">Agreed</Button>
+            <Button icon={<CheckIcon />} width="md:w-[220px] w-[180px] text-sm">Agree</Button>
           </div>
           <div className="bl-disagree">
-            <Button icon={<CrossIcon />} width="md:w-[220px] w-[180px] text-sm">Not Agreed</Button>
+            <Button icon={<CrossIcon />} width="md:w-[220px] w-[180px] text-sm">Disagree</Button>
           </div>
         </div>
       </div>

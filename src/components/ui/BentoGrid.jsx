@@ -50,7 +50,7 @@ function BentoDesktop() {
             <CardTitle className="text-4xl xl:text-5xl text-button">
               Website
               <br />
-              Designing
+              Design
             </CardTitle>
           </Card>
         </div>

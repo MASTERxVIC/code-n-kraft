@@ -220,15 +220,6 @@ export default function ProofVault() {
                       </div>
                     )}
                   </CardEl>
-
-                  {/* Brand name under the card */}
-                  <p
-                    className={`mt-3 text-center font-display text-sm font-semibold uppercase tracking-[0.15em] text-heading transition-opacity ${
-                      isCenter ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    {w.brand}
-                  </p>
                 </div>
               );
             })}
@@ -236,6 +227,11 @@ export default function ProofVault() {
             {/* Ellipse shadow under the center card */}
             <div className="pointer-events-none absolute bottom-6 left-1/2 z-10 h-6 w-56 -translate-x-1/2 rounded-[100%] bg-[#44394c]/25 blur-md md:bottom-2 md:w-72" />
           </div>
+
+          {/* Single caption — hamesha active card se bound, desync impossible */}
+          <p className="mt-3 text-center font-display text-sm font-semibold uppercase tracking-[0.15em] text-heading">
+            {WORKS[active].brand}
+          </p>
 
           {/* Arrows */}
           <div className="pointer-events-none absolute inset-y-0 left-0 right-0 z-30 flex items-center justify-between px-2 md:px-8">

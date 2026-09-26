@@ -5,10 +5,13 @@ import { createPortal } from "react-dom";
 import Link from "next/link";
 import MenuIcon from "../icons/MenuIcon";
 import CloseMenuIcon from "../icons/CloseMenuIcon";
+import Button from "../ui/Button";
+import { useLeadForm } from "../ui/LeadFormModal";
 
 export default function MobileMenu({ links }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { openLeadForm } = useLeadForm();
 
   useEffect(() => {
     setMounted(true);
@@ -45,6 +48,17 @@ export default function MobileMenu({ links }) {
           </li>
         ))}
       </ul>
+      <div className="flex justify-center px-[var(--gutter)]">
+        <Button
+          width="w-[240px]"
+          onClick={() => {
+            setOpen(false);
+            openLeadForm();
+          }}
+        >
+          Book Call
+        </Button>
+      </div>
     </nav>
   );
 
