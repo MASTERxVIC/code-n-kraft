@@ -246,7 +246,7 @@ export default function AboutPage() {
       <WatermarkWrapper>
         <Section tone="transparent" noPadding className="px-0">
           <div className="mx-auto max-w-[1248px] px-[var(--gutter)] py-12 md:py-16">
-            <SectionHeading badge="What we do" title="Six crafts, one studio" />
+            <SectionHeading badge="What we do" title="6 krafts, one studio" />
             <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {SERVICES.map((s) => (
                 <Link
