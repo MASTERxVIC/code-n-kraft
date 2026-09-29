@@ -191,7 +191,7 @@ export default function Footer() {
               Email
             </p>
             <a
-              href="mailto:support@coden Kraft.com"
+              href="mailto:support@codenkraft.com"
               className="mt-2 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
             >
               support@codenkraft.com
