@@ -259,7 +259,7 @@ export default function Footer() {
           data-footer="reveal"
           className="pb-8 pt-14 text-center font-body text-xs text-heading/80  md:pt-0"
         >
-          &copy; 2026 Code N Kraft. All Rights Reserved.
+          &copy; 2026 Code n Kraft. All Rights Reserved.
         </p>
       </div>
     </footer>
