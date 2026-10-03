@@ -215,7 +215,7 @@ export default function Footer() {
               href="/blog"
               className="mt-6 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
             >
-              BLOG
+              Blog
             </Link>
           </div>
 
