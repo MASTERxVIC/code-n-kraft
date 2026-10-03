@@ -211,12 +211,21 @@ export default function Footer() {
             >
               support@codenkraft.com
             </a>
-            <Link
-              href="/blog"
-              className="mt-6 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
-            >
-              Blog
-            </Link>
+          </div>
+          
+          {/* row 3, col 1 — community */}
+          <div
+            data-footer="reveal"
+            className="col-start-1 row-start-3 flex flex-col items-center text-center md:col-start-1 md:row-start-3 md:items-center md:text-center"
+          >
+            <p className={labelCls}>Community</p>
+            <ul className="md:mt-7 mt-4 flex flex-col items-center gap-2 md:items-center md:gap-7">
+              <li>
+                <Link href="/blog" className={linkCls}>
+                  Blog
+                </Link>
+              </li>
+            </ul>
           </div>
 
           {/* col 2, rows 1-2 — big logo (brush circle + CnK ek unit) */}
