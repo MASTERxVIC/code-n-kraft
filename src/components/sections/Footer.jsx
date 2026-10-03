@@ -13,7 +13,7 @@ const FOOTER_LOGO = "/assets/FooterLogo.svg";
 
 // FooterLogo.svg (viewBox 0 0 329 374) se nikale hue pixels
 const FOOTER_PIXELS = [
-{ d: "M262.12 44.8936H247.258V60.0599H262.12V44.8936Z", fill: "#F3E8FF" },
+  { d: "M262.12 44.8936H247.258V60.0599H262.12V44.8936Z", fill: "#F3E8FF" },
   { d: "M312.111 102.729H297.249V117.895H312.111V102.729Z", fill: "#F3E8FF" },
   { d: "M272.253 109.533H257.391V124.699H272.253V109.533Z", fill: "#F3E8FF" },
   { d: "M260.094 93.8833H245.231V109.05H260.094V93.8833Z", fill: "#F3E8FF" },
@@ -71,13 +71,31 @@ const linkCls =
 function SocialIcons() {
   return (
     <div className="flex flex-row items-center gap-5 md:flex-col md:gap-9">
-      <a href="https://www.linkedin.com/company/code-n-kraft" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="transition-transform hover:scale-110">
+      <a
+        href="https://www.linkedin.com/company/code-n-kraft"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        className="transition-transform hover:scale-110"
+      >
         <img src="/assets/LinkedIn.svg" alt="LinkedIn" className="h-5 w-5" />
       </a>
-      <a href="https://wa.me/917505038676" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="transition-transform hover:scale-110">
+      <a
+        href="https://wa.me/917505038676"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="WhatsApp"
+        className="transition-transform hover:scale-110"
+      >
         <img src="/assets/WhatsApp.svg" alt="WhatsApp" className="h-5 w-5" />
       </a>
-      <a href="https://www.instagram.com/codenkraft" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="transition-transform hover:scale-110">
+      <a
+        href="https://www.instagram.com/codenkraft"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        className="transition-transform hover:scale-110"
+      >
         <img src="/assets/Instagram.svg" alt="Instagram" className="h-5 w-5" />
       </a>
     </div>
@@ -91,53 +109,50 @@ export default function Footer() {
   /* Footer reveal + pixels — ScrollTrigger setup viewport ke paas aane par
      (useDeferredGsap). Navbar ka hide-on-footer sirf <footer> DOM pe depend
      karta hai, jo hum delay nahi karte — sirf animation setup defer hota hai */
-  useDeferredGsap(root,
-    () => {
-      const el = root.current;
-      if (!el) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      const q = gsap.utils.selector(el);
+  useDeferredGsap(root, () => {
+    const el = root.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const q = gsap.utils.selector(el);
 
-      const tl = gsap.timeline({
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Content reveal: tagline → columns → copyright
+    tl.fromTo(
+      q("[data-footer='reveal']"),
+      { opacity: 0, y: 32 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        stagger: 0.12,
+      },
+    );
+
+    gsap.fromTo(
+      q(".footer-pixel"),
+      { scale: 0, opacity: 0, transformOrigin: "center" },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+        stagger: { each: 0.05, from: "random" },
         scrollTrigger: {
-          trigger: el,
-          start: "top 80%",
+          trigger: q(".footer-logo-wrap"),
+          start: "top 85%",
           toggleActions: "play none none none",
         },
-      });
-
-      // Content reveal: tagline → columns → copyright
-      tl.fromTo(
-        q("[data-footer='reveal']"),
-        { opacity: 0, y: 32 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.12,
-        }
-      );
-
-      
-      gsap.fromTo(
-        q(".footer-pixel"),
-        { scale: 0, opacity: 0, transformOrigin: "center" },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 0.6,
-          ease: "back.out(1.7)",
-          stagger: { each: 0.05, from: "random" },
-          scrollTrigger: {
-            trigger: q(".footer-logo-wrap"),
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    }
-  );
+      },
+    );
+  });
 
   return (
     <footer ref={root} className="bg-footer text-heading">
@@ -196,6 +211,12 @@ export default function Footer() {
             >
               support@codenkraft.com
             </a>
+            <Link
+              href="/blog"
+              className="mt-6 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
+            >
+              BLOG
+            </Link>
           </div>
 
           {/* col 2, rows 1-2 — big logo (brush circle + CnK ek unit) */}
@@ -219,7 +240,12 @@ export default function Footer() {
                 aria-hidden="true"
               >
                 {FOOTER_PIXELS.map((p, i) => (
-                  <path key={i} d={p.d} fill={p.fill} className="footer-pixel" />
+                  <path
+                    key={i}
+                    d={p.d}
+                    fill={p.fill}
+                    className="footer-pixel"
+                  />
                 ))}
               </svg>
             </div>
