@@ -166,66 +166,71 @@ export default function Footer() {
         </p>
 
         {/* main grid —
-            mobile (2 col): Quick Access | Social Links / Contact Info | Legal
-            desktop (3 col): Quick Access | logo | Social Links / Contact Info | logo | Legal */}
+            mobile (2 col): col 1 = Quick Access + Contact Info + Community (stacked)
+                            col 2 = Social Links + Legal
+            desktop (3 col): col 1 = stacked sections | col 2 = logo | col 3 = Social Links + Legal */}
         <div className="grid grid-cols-2 gap-x-16 gap-y-16 py-16 md:grid-cols-3 md:gap-x-12 md:gap-y-24 md:py-24">
-          {/* row 1, col 1 — quick access */}
-          <div
-            data-footer="reveal"
-            className="col-start-1 row-start-1 flex flex-col items-center text-center md:col-start-1 md:row-start-1 md:items-center md:text-center"
-          >
-            <p className={labelCls}>Quick Access</p>
-            <ul className="md:mt-7 mt-4 flex flex-col items-center gap-3 md:items-center md:gap-7 ">
-              {QUICK_ACCESS.map((item) => (
-                <li key={item.label}>
-                  {item.action === "openLeadForm" ? (
-                    <button
-                      type="button"
-                      onClick={openLeadForm}
-                      className={`${linkCls} cursor-pointer`}
-                    >
-                      {item.label}
-                    </button>
-                  ) : (
-                    <Link href={item.href} className={linkCls}>
-                      {item.label}
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* row 2, col 1 — contact info */}
-          <div
-            data-footer="reveal"
-            className="col-start-1 row-start-2 flex flex-col items-center text-center md:col-start-1 md:row-start-2 md:items-center md:text-center"
-          >
-            <p className={labelCls}>Contact Info</p>
-            <p className="md:mt-7 mt-4 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/80 md:justify-center">
-              Email
-            </p>
-            <a
-              href="mailto:support@codenkraft.com"
-              className="mt-2 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
+          {/* col 1 — stacked: quick access + contact info + community
+              (logo ke row-span se banta dead gap khatam karne ke liye) */}
+          <div className="col-start-1 row-start-1 row-span-3 flex flex-col items-center gap-16 text-center md:col-start-1 md:row-span-3 md:row-start-1 md:gap-24">
+            {/* quick access */}
+            <div
+              data-footer="reveal"
+              className="flex w-full flex-col items-center text-center"
             >
-              support@codenkraft.com
-            </a>
-          </div>
-          
-          {/* row 3, col 1 — community */}
-          <div
-            data-footer="reveal"
-            className="col-start-1 row-start-3 flex flex-col items-center text-center md:col-start-1 md:row-start-3 md:items-center md:text-center"
-          >
-            <p className={labelCls}>Community</p>
-            <ul className="md:mt-7 mt-4 flex flex-col items-center gap-2 md:items-center md:gap-7">
-              <li>
-                <Link href="/blog" className={linkCls}>
-                  Blog
-                </Link>
-              </li>
-            </ul>
+              <p className={labelCls}>Quick Access</p>
+              <ul className="md:mt-7 mt-4 flex flex-col items-center gap-3 md:items-center md:gap-7 ">
+                {QUICK_ACCESS.map((item) => (
+                  <li key={item.label}>
+                    {item.action === "openLeadForm" ? (
+                      <button
+                        type="button"
+                        onClick={openLeadForm}
+                        className={`${linkCls} cursor-pointer`}
+                      >
+                        {item.label}
+                      </button>
+                    ) : (
+                      <Link href={item.href} className={linkCls}>
+                        {item.label}
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* contact info */}
+            <div
+              data-footer="reveal"
+              className="flex w-full flex-col items-center text-center"
+            >
+              <p className={labelCls}>Contact Info</p>
+              <p className="md:mt-7 mt-4 flex items-center justify-center gap-2 font-label text-[10px] uppercase tracking-[0.18em] text-heading/80 md:justify-center">
+                Email
+              </p>
+              <a
+                href="mailto:support@codenkraft.com"
+                className="mt-2 block font-serif text-xs md:text-sm text-heading/80 transition-colors hover:text-supportive"
+              >
+                support@codenkraft.com
+              </a>
+            </div>
+
+            {/* community */}
+            <div
+              data-footer="reveal"
+              className="flex w-full flex-col items-center text-center"
+            >
+              <p className={labelCls}>Community</p>
+              <ul className="md:mt-7 mt-4 flex flex-col items-center gap-2 md:items-center md:gap-7">
+                <li>
+                  <Link href="/blog" className={linkCls}>
+                    Blog
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* col 2, rows 1-2 — big logo (brush circle + CnK ek unit) */}
